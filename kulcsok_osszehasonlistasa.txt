@@ -1,0 +1,44 @@
+A **kulcs**, a **szuperkulcs** és a **külső kulcs** fontos fogalmak a relációs adatbázisokban, de eltérő szerepeket töltenek be. Nézzük meg ezeket a fogalmakat részletesen:
+
+### **Szuperkulcs**
+
+- Egy **szuperkulcs** egy vagy több attribútum (oszlop) olyan halmaza, amely egyedileg azonosít minden rekordot egy táblában. Ez azt jelenti, hogy egy szuperkulccsal biztosan nem lesz két azonos sor a táblában.
+- Fontos, hogy egy szuperkulcs tartalmazhat felesleges attribútumokat, tehát lehet olyan attribútuma, amely nélkül is egyediséget biztosít.
+  
+  **Példa**:
+  Ha van egy **Felhasználó** tábla a következő attribútumokkal:
+  ```
+  Felhasználó(felhasználónév, e-mail, születési dátum, jelszó)
+  ```
+  - A **{felhasználónév, e-mail}** egy szuperkulcs, mert ez a két attribútum együtt biztosítja, hogy egyedi felhasználókat azonosítunk.
+  - A **{felhasználónév, e-mail, születési dátum}** szintén szuperkulcs, de tartalmaz felesleges attribútumot, hiszen a "születési dátum" nem szükséges az egyediség biztosításához.
+
+### **Kulcs**
+
+- A **kulcs** egy olyan minimális szuperkulcs, amely egyedileg azonosítja a tábla minden rekordját, és amelyből nem lehet elhagyni egyetlen attribútumot sem anélkül, hogy elvesztené az egyediség garanciáját.
+- Más szóval: a kulcs az a legkisebb attribútumhalmaz, amely biztosítja a sorok egyediségét a táblában.
+  
+  **Példa**:
+  A fenti **Felhasználó** táblában a **{felhasználónév}** egy kulcs, mert egyedileg azonosít minden felhasználót, és nincs szükség más attribútumra az egyediség biztosításához.
+  
+  - A **{felhasználónév, e-mail}** szuperkulcs volt, de a felesleges "e-mail" attribútum miatt nem minimális. Ha elhagyjuk az "e-mail" attribútumot, a **{felhasználónév}** kulccsá válik.
+
+### **Külső kulcs**
+
+- A **külső kulcs** egy attribútum vagy attribútumhalmaz, amely egy másik tábla elsődleges kulcsára hivatkozik. A külső kulcsok segítségével lehet kapcsolatokat létrehozni táblák között, és biztosítani, hogy a két tábla közötti kapcsolat érvényes maradjon.
+- A külső kulcs biztosítja, hogy egy táblában az értékek csak olyan értékek lehetnek, amelyek a másik (hivatkozott) táblában már léteznek.
+
+  **Példa**:
+  Képzeljük el, hogy van egy **Üzenet** tábla:
+  ```
+  Üzenet(üzenet_id, felhasználónév, dátum, tartalom)
+  ```
+  Itt a **felhasználónév** külső kulcs, mert a **Felhasználó** tábla **felhasználónév** attribútumára hivatkozik. Ezzel biztosítjuk, hogy csak olyan üzenetet lehet bejegyezni, amelyhez egy létező felhasználónév tartozik a **Felhasználó** táblában.
+
+### **Összefoglalás**
+
+1. **Szuperkulcs**: Bármely olyan attribútumhalmaz, amely egyedileg azonosít minden rekordot, de tartalmazhat felesleges attribútumokat is.
+2. **Kulcs**: Egy minimális szuperkulcs, amely nem tartalmaz felesleges attribútumokat; a legkisebb halmaz, ami még biztosítja az egyediséget.
+3. **Külső kulcs**: Egy másik tábla kulcsára hivatkozó attribútum, amely biztosítja a táblák közötti kapcsolatokat és az adatok integritását.
+
+Mindhárom fogalom az adatok egyediségét és integritását biztosítja az adatbázisban, de eltérő szerepekkel.
