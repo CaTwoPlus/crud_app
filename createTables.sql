@@ -1,88 +1,93 @@
-CREATE TABLE ADMIN (
-    email VARCHAR(255) PRIMARY KEY,
-    nev VARCHAR(100) NOT NULL,
-    jelszo VARCHAR(255) NOT NULL,
-    utolso_belepes_datuma DATETIME
+create table admin (
+    email varchar(255) primary key,
+    nev varchar(100) not null,
+    jelszo varchar(255) not null,
+    utolso_belepes_datuma datetime
 );
 
-CREATE TABLE CSATORNA (
-    nev VARCHAR(100) PRIMARY KEY,
-    kategoria VARCHAR(50),
-    leiras TEXT
+create table csatorna (
+    nev varchar(100) primary key,
+    kategoria varchar(50),
+    leiras text
 );
 
-CREATE TABLE SZEREPLO (
-	id INT AUTO_INCREMENT PRIMARY KEY,
-    nev VARCHAR(100),
-    szul_datum DATE,
-    nemzetiseg VARCHAR(50),
-    foglalkozas VARCHAR(100)
+create table szereplo (
+	id int auto_increment primary key,
+    nev varchar(100),
+    szul_datum date,
+    nemzetiseg varchar(50),
+    foglalkozas varchar(100)
 );
 
-CREATE TABLE MUSOR (
-	cim VARCHAR(255),
-    ismerteto TEXT,
-    epizod VARCHAR(50),
-    PRIMARY KEY (cim, epizod)
+create table musor (
+	cim varchar(255),
+    ismerteto text,
+    epizod varchar(50),
+    primary key (cim, epizod)
 );
 
-CREATE TABLE KOZVETITES (
-    musor_cim VARCHAR(255),
-    csatorna_nev VARCHAR(100),
-    idopont DATETIME,
-    PRIMARY KEY (musor_cim, csatorna_nev, idopont),
-    FOREIGN KEY (csatorna_nev) REFERENCES CSATORNA(nev),
-    FOREIGN KEY (musor_cim) REFERENCES MUSOR(cim)
+create table kozvetites (
+    csatornanev varchar(100),
+    musorcim varchar(255),
+	epizod varchar(50),
+    idopont datetime,
+    primary key (csatornanev, musorcim, epizod, idopont),
+	foreign key (musorcim, epizod) references musor(cim, epizod),
+    foreign key (csatornanev) references csatorna(nev)
 );
 
-CREATE TABLE SZEREPLOK (
-    musor_cim VARCHAR(255),
-    epizod VARCHAR(50),
-    szereplo VARCHAR(100),
-    PRIMARY KEY (szereplo, musor_cim, epizod),
-    FOREIGN KEY (musor_cim, epizod) REFERENCES MUSOR(cim, epizod)
+create table musor_szereploi (
+    szereplo_id int,
+	musorcim varchar(255),
+	epizod varchar(50),
+    primary key (szereplo_id, musorcim, epizod),
+	foreign key (musorcim, epizod) references musor(cim, epizod),
+    foreign key (szereplo_id) references szereplo(id)
 );
 
-CREATE TABLE SZEREPLESEK (
-    szereplo_id INT,
-	musor_cim VARCHAR(255),
-	epizod VARCHAR(50),
-    PRIMARY KEY (szereplo_id, musor_cim, epizod),
-	FOREIGN KEY (musor_cim, epizod) REFERENCES MUSOR(cim, epizod),
-    FOREIGN KEY (szereplo_id) REFERENCES SZEREPLO(id)
+create table kezelte_kozvetites (
+    email varchar(255),
+	csatornanev varchar(100),
+    musorcim varchar(255),
+    epizod varchar(50),
+    idopont datetime,
+    primary key (email, csatornanev, musorcim, epizod, idopont),
+    foreign key (csatornanev, musorcim, epizod, idopont) references kozvetites(csatornanev, musorcim, epizod, idopont),
+    foreign key (email) references admin(email)
 );
 
-CREATE TABLE KEZELTE_KOZVETITES (
-    email VARCHAR(255),
-    musor_cim VARCHAR(255),
-    csatorna_nev VARCHAR(100),
-    idopont DATETIME,
-    PRIMARY KEY (email, musor_cim, csatorna_nev, idopont),
-    FOREIGN KEY (musor_cim, csatorna_nev, idopont) REFERENCES KOZVETITES(musor_cim, csatorna_nev, idopont),
-    FOREIGN KEY (email) REFERENCES ADMIN(email)
+create table kezelte_csatorna (
+    email varchar(255),
+    csatornanev varchar(100),
+    primary key (csatornanev, email),
+    foreign key (email) references admin(email),
+    foreign key (csatornanev) references csatorna(nev)
 );
 
-CREATE TABLE KEZELTE_CSATORNA (
-    email VARCHAR(255),
-    csatornanev VARCHAR(100),
-    PRIMARY KEY (csatornanev, email),
-    FOREIGN KEY (email) REFERENCES ADMIN(email),
-    FOREIGN KEY (csatornanev) REFERENCES CSATORNA(nev)
+create table kezelte_musor (
+    email varchar(255),
+    musorcim varchar(255),
+    epizod varchar(50),
+    primary key (email, musorcim, epizod),
+	foreign key (musorcim, epizod) references musor(cim, epizod),
+    foreign key (email) references admin(email)
 );
 
-CREATE TABLE KEZELTE_MUSOR (
-    email VARCHAR(255),
-    musor_cim VARCHAR(255),
-    epizod VARCHAR(50),
-    PRIMARY KEY (email, musor_cim, epizod),
-	FOREIGN KEY (musor_cim, epizod) REFERENCES MUSOR(cim, epizod),
-    FOREIGN KEY (email) REFERENCES ADMIN(email)
+create table kezelte_szereplo (
+    email varchar(255),
+    szereplo_id int,
+    primary key (szereplo_id, email),
+    foreign key (email) references admin(email),
+    foreign key (szereplo_id) references szereplo(id)
 );
 
-CREATE TABLE KEZELTE_SZEREPLO (
-    email VARCHAR(255),
-    szereplo_id INT,
-    PRIMARY KEY (szereplo_id, email),
-    FOREIGN KEY (email) REFERENCES ADMIN(email),
-    FOREIGN KEY (szereplo_id) REFERENCES SZEREPLO(id)
+create table kezelete_musor_szereploi ( 
+	email varchar(255),
+	szereplo_id int,
+	musorcim varchar(255),
+	epizod varchar(50),
+    primary key (email, szereplo_id, musorcim, epizod),
+    foreign key (szereplo_id) references szereplo(id),
+    foreign key (musorcim, epizod) references musor(cim, epizod),
+    foreign key (email) references admin(email)
 );

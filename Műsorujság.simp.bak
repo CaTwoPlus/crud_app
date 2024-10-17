@@ -212,14 +212,14 @@
     <item id="2c105d3f885545d190b9efbf3dcbbbf8" cid="ENT005" type="erd-chen-entity" name="Közvetítés" creation-date="10/02/2024 22:19:50">
       <erd-chen-entity type="standard" />
     </item>
+    <item id="c332c86020c242688bb2d918cde17594" cid="ENT004" type="erd-entity" name="Szereplő" creation-date="10/02/2024 19:39:41">
+      <entity description="" />
+    </item>
     <item id="fc9dde26139b40a799b58e6c2c967b74" cid="ELEM001" type="drawing-shape" name="SimpleShape1" creation-date="10/02/2024 19:40:53">
       <drawing>
         <text>Ismertető</text>
       </drawing>
       <drawing-shape type="Ellipse" />
-    </item>
-    <item id="c332c86020c242688bb2d918cde17594" cid="ENT004" type="erd-entity" name="Szereplő" creation-date="10/02/2024 19:39:41">
-      <entity description="" />
     </item>
     <item id="9aa2f1bd17e8461987000391a38db864" cid="ELEM001" type="drawing-shape" name="SimpleShape1" creation-date="10/02/2024 19:40:53">
       <drawing>
@@ -239,14 +239,14 @@
     <item id="cb18dd6718b9410f81cf932707b07a75" cid="REL001" type="erd-chen-relationship" name="hozzárendelte" creation-date="10/02/2024 20:40:40">
       <erd-chen-relationship type="standard" />
     </item>
-    <item id="6309434ebb7941349b76f27fe2925055" cid="ATT007" type="erd-chen-attribute" name="cím" creation-date="10/03/2024 04:34:38">
-      <erd-chen-attribute type="key" />
-    </item>
     <item id="d35cdc4cfd3945ae96ab37d7f58be891" cid="ELEM001" type="drawing-shape" name="SimpleShape1" creation-date="10/02/2024 19:40:53">
       <drawing>
         <text>utólsó belépés időpontja</text>
       </drawing>
       <drawing-shape type="Ellipse" />
+    </item>
+    <item id="6309434ebb7941349b76f27fe2925055" cid="ATT007" type="erd-chen-attribute" name="cím" creation-date="10/03/2024 04:34:38">
+      <erd-chen-attribute type="key" />
     </item>
     <item id="570ff3ce0e8349f8aa0758cbd38299b2" cid="ENT002" type="erd-entity" name="Csatorna" creation-date="10/02/2024 19:39:25">
       <entity description="" />
@@ -303,15 +303,15 @@
       </style>
       <erd-chen-attribute type="key" />
     </item>
-    <item id="71dd0a3eb43745de892653813b0b258d" cid="ELEM001" type="drawing-shape" name="SimpleShape1" creation-date="10/02/2024 19:40:53">
-      <drawing>
-        <text>Utólsó belépés időpontja</text>
-      </drawing>
-      <drawing-shape type="Ellipse" />
-    </item>
     <item id="16362c46e02e431486be03abc2744184" cid="ELEM001" type="drawing-shape" name="SimpleShape1" creation-date="10/02/2024 19:40:53">
       <drawing>
         <text>Foglalkozás</text>
+      </drawing>
+      <drawing-shape type="Ellipse" />
+    </item>
+    <item id="71dd0a3eb43745de892653813b0b258d" cid="ELEM001" type="drawing-shape" name="SimpleShape1" creation-date="10/02/2024 19:40:53">
+      <drawing>
+        <text>Utólsó belépés időpontja</text>
       </drawing>
       <drawing-shape type="Ellipse" />
     </item>
@@ -354,232 +354,7 @@
       </meta>
       <abstract-items />
       <sub-models />
-      <diagram type="entity-relationship" id="p0d37b104b7804a8f9aa642e6abb29773_736127455" name="EntityRelationshipDiagram1" order-index="1" uid="" name-style="" auto-routed-paths="false" default-line-style="default" view-location="-156,44">
-        <style>
-          <background-color index="1" color="#FFFFFFFF" />
-          <background-color index="2" color="#FFFFFFFF" />
-          <background-type type="solid" />
-        </style>
-        <meta>
-          <authors>
-            <author> </author>
-          </authors>
-          <description />
-          <creation-date>10/02/2024 19:36:37</creation-date>
-          <change-date>10/02/2024 20:04:22</change-date>
-          <revision-count>0</revision-count>
-          <version />
-        </meta>
-        <abstract-items>
-          <item id="di30bbfe77b57f41ae80cc34478450ba2b9126" veid="541c4ad137b04a908759623aec332244" cid="ELEM016" type="drawing-line" name="Line15" creator="" creation-date="10/02/2024 20:01:25">
-            <drawing />
-          </item>
-          <item id="dia64a6f11000543c5ab9d23e13d23f68e1962" veid="821c5b807bf44edf8b95116974c0a9e4" cid="ELEM005" type="drawing-line" name="Line4" creator="" creation-date="10/02/2024 19:52:25">
-            <drawing />
-          </item>
-          <item id="dide6123aedcda4d4f8094afe7457696732136" veid="d39dfb6f236c481c8cb807654210b107" cid="ELEM010" type="drawing-line" name="Line9" creator="" creation-date="10/02/2024 19:56:55">
-            <drawing />
-          </item>
-          <item id="di3e456b58dd8c43cda5ba2b7402f515699856" veid="b8adfc7f193e4c5aad5af19b357d52fa" cid="ELEM021" type="drawing-line" name="Line20" creator="" creation-date="10/02/2024 20:04:22">
-            <drawing />
-          </item>
-          <item id="bf38a1cc484b46c4abdaf1d9098d5a13" cid="ENT003" type="erd-entity" name="Műsor" creator="" creation-date="10/02/2024 19:39:35">
-            <entity description="" />
-          </item>
-          <item id="di46d85a7bc1ff47bbbc385b20e08bb95c7363" veid="11837f335f034658a3d18b26f92670f4" cid="ELEM009" type="drawing-line" name="Line8" creator="" creation-date="10/02/2024 19:56:41">
-            <drawing />
-          </item>
-          <item id="di90723c8b98f64c06b02f695083222a4e6281" veid="f904555d664b4c70b7d5502fc300087e" cid="ELEM006" type="drawing-line" name="Line5" creator="" creation-date="10/02/2024 19:52:47">
-            <drawing />
-          </item>
-          <item id="di71a52e6fced049d5bde0d459828f2d9d2797" veid="645e13a0aaaa4a4e88e88831a23f4a47" cid="ELEM017" type="drawing-line" name="Line16" creator="" creation-date="10/02/2024 20:02:26">
-            <drawing />
-          </item>
-          <item id="di00bb5c2d32644e1db1ef3cc296c8c67d4063" veid="a6b8419c3ed843c7a752cd589eedc66e" cid="ELEM018" type="drawing-line" name="Line17" creator="" creation-date="10/02/2024 20:02:40">
-            <drawing />
-          </item>
-          <item id="09d1558e111c4f98bb1be00a693267cb" cid="ELEM001" type="drawing-shape" name="Név" creator="" creation-date="10/02/2024 19:40:53">
-            <drawing>
-              <text>Név</text>
-            </drawing>
-            <drawing-shape type="Ellipse" />
-          </item>
-          <item id="di4fbcde92df7f4ae382ced44f52ed1b9d6938" veid="79fc07eb6784444e91455156543d6f90" cid="ELEM014" type="drawing-line" name="Line13" creator="" creation-date="10/02/2024 20:00:38">
-            <drawing />
-          </item>
-          <item id="di117d93552fb94415bf32c5d930e2f6ed8414" veid="348782b81ee9427b94c9751ae7dd78e6" cid="ELEM020" type="drawing-line" name="Line19" creator="" creation-date="10/02/2024 20:03:56">
-            <drawing />
-          </item>
-          <item id="e006c985877745d8a5d2ec0487154267" cid="ENT001" type="erd-entity" name="Admin" creator="" creation-date="10/02/2024 19:39:05">
-            <entity description="" />
-          </item>
-          <item id="di624739c9919d4ee2841b2dfd57c27be11563" veid="1538d33bfef54715b7590bacbd3976b2" cid="ELEM003" type="drawing-line" name="Line2" creator="" creation-date="10/02/2024 19:51:41">
-            <drawing />
-          </item>
-          <item id="3c30ac04a713413780aa5e6f32cc023a" cid="ENT004" type="erd-entity" name="Szereplő" creator="" creation-date="10/02/2024 19:39:41">
-            <entity description="" />
-          </item>
-          <item id="di030addcc41c4493e84ae697041764fdd3950" veid="c88dffd2f8534134b17af57db2808474" cid="ELEM019" type="drawing-line" name="Line18" creator="" creation-date="10/02/2024 20:03:47">
-            <drawing />
-          </item>
-          <item id="difb53c7e463584bf6916fe2f0f01d897a3718" veid="cc440087a3b546d982c1f30f81343b6e" cid="ELEM012" type="drawing-line" name="Line11" creator="" creation-date="10/02/2024 19:57:11">
-            <drawing />
-          </item>
-          <item id="di1e02f80ee3364beb91a513ba4e3d1e4f2743" veid="a995b7acf2b94379bc438dc4110259c3" cid="ELEM011" type="drawing-line" name="Line10" creator="" creation-date="10/02/2024 19:57:02">
-            <drawing />
-          </item>
-          <item id="3ff565d123bb4d568d41acccfff2f2f0" cid="ENT002" type="erd-entity" name="Csatorna" creator="" creation-date="10/02/2024 19:39:25">
-            <entity description="" />
-          </item>
-          <item id="dia5c1dada299c4eaaa1dc2f7f82c659d13096" veid="de4e6c0e4a904c988ccdb7697841d738" cid="ELEM004" type="drawing-line" name="Line3" creator="" creation-date="10/02/2024 19:52:12">
-            <drawing />
-          </item>
-          <item id="dif5cca016522c4700bb3b64be48268ebc5022" veid="81a21f72b4b5442aa5e1a3a38b5aea1f" cid="ELEM013" type="drawing-line" name="Line12" creator="" creation-date="10/02/2024 20:00:21">
-            <drawing />
-          </item>
-          <item id="dib01e5512918f406ebae6b285b487729f2725" veid="6e4bd1e958cb47e989d96fc103bfe317" cid="ELEM015" type="drawing-line" name="Line14" creator="" creation-date="10/02/2024 20:00:55">
-            <drawing />
-          </item>
-        </abstract-items>
-        <layer id="86b2e805d864437d9656e7e5901e155c" name="Default" visible="true" enabled="true" locked="false">
-          <item id="e006c985877745d8a5d2ec0487154267" iid="8940d5b2423b42b187469f9368f11f36" creation-date="10/02/2024 19:39:05" order-index="0" type="entity">
-            <layout ax="329" ay="231" awidth="140" aheight="27" x="329" y="231" width="140" height="27" />
-            <erd-entity show-nullability="true" />
-          </item>
-          <item id="3ff565d123bb4d568d41acccfff2f2f0" iid="b8f0e03377214200b5181c94d0af7e4f" creation-date="10/02/2024 19:39:25" order-index="1" type="entity">
-            <layout ax="909.5" ay="659.25" awidth="140" aheight="27" x="909.5" y="659.25" width="140" height="27" />
-            <erd-entity show-nullability="true" />
-          </item>
-          <item id="bf38a1cc484b46c4abdaf1d9098d5a13" iid="6f951c9a830443c3ba0761803adc48be" creation-date="10/02/2024 19:39:35" order-index="2" type="entity">
-            <layout ax="933.5" ay="260.25" awidth="140" aheight="27" x="933.5" y="260.25" width="140" height="27" />
-            <erd-entity show-nullability="true" />
-          </item>
-          <item id="3c30ac04a713413780aa5e6f32cc023a" iid="c0b5ccd2826844479dfe11dfc13fe4f4" creation-date="10/02/2024 19:39:41" order-index="3" type="entity">
-            <layout ax="258" ay="665.75" awidth="140" aheight="27" x="258" y="665.75" width="140" height="27" />
-            <erd-entity show-nullability="true" />
-          </item>
-          <item id="09d1558e111c4f98bb1be00a693267cb" iid="0e7110c1b4334f959b89e291cd95b12a" creation-date="10/02/2024 19:40:53" order-index="4" type="entity">
-            <layout ax="208" ay="168" awidth="94" aheight="49" x="208" y="168" width="94" height="49" />
-          </item>
-          <item id="74d3b5a94c3747b6960ea6c06746b838" iid="4c7e4e5483f54c479f43dc60ce5a2b7f" creation-date="10/02/2024 19:40:53" order-index="0" type="entity">
-            <layout ax="208" ay="272" awidth="94" aheight="49" x="208" y="272" width="94" height="49" />
-          </item>
-          <item id="0df359e7367445fe90e5885d579d153a" iid="91503a401fa74f7a99ebebd0ea7548e9" creation-date="10/02/2024 19:40:53" order-index="0" type="entity">
-            <layout ax="352" ay="131" awidth="94" aheight="49" x="352" y="131" width="94" height="49" />
-          </item>
-          <item id="71dd0a3eb43745de892653813b0b258d" iid="e45f82df52af41baaef8136af60a4fc7" creation-date="10/02/2024 19:40:53" order-index="0" type="entity">
-            <layout ax="329.5" ay="299" awidth="140" aheight="94" x="341.5" y="309" width="140" height="94" />
-          </item>
-          <item id="d77bf2fe7c964caca86b254826a73a31" iid="cec3bd3d3e564d72bdad3ebb8b9b6f14" creation-date="10/02/2024 19:40:53" order-index="0" type="entity">
-            <layout ax="1008.5" ay="724.75" awidth="94" aheight="49" x="1008.5" y="724.75" width="94" height="49" />
-          </item>
-          <item id="9aa2f1bd17e8461987000391a38db864" iid="f8f9b568187e4226bdab5bf61cf1f4ef" creation-date="10/02/2024 19:40:53" order-index="0" type="entity">
-            <layout ax="864.5" ay="724.75" awidth="94" aheight="49" x="864.5" y="724.75" width="94" height="49" />
-          </item>
-          <item id="eb0f896ae390480584dadb1005b194ab" iid="3b8db1196f97417fa5e327f50106aca5" creation-date="10/02/2024 19:40:53" order-index="0" type="entity">
-            <layout ax="932.5" ay="571.75" awidth="94" aheight="49" x="932.5" y="571.75" width="94" height="49" />
-          </item>
-          <item id="0b773e49081a43819e231f950b33804e" iid="e0c53304e2844c6a89f9c2efbe7a768a" creation-date="10/02/2024 19:40:53" order-index="0" type="entity">
-            <layout ax="263" ay="559.75" awidth="130" aheight="73" x="281" y="571.75" width="130" height="73" />
-          </item>
-          <item id="4277b1a528e847f5bd560bff1e4cb416" iid="f9c7ae8d1fb94426ba93ed29ad70d385" creation-date="10/02/2024 19:40:53" order-index="0" type="entity">
-            <layout ax="128" ay="707.75" awidth="94" aheight="49" x="128" y="707.75" width="94" height="49" />
-          </item>
-          <item id="16362c46e02e431486be03abc2744184" iid="4724a9f85871464e8469d07695b1a0da" creation-date="10/02/2024 19:40:53" order-index="0" type="entity">
-            <layout ax="281" ay="737.75" awidth="94" aheight="49" x="281" y="737.75" width="94" height="49" />
-          </item>
-          <item id="e6ac21e6c6694a3386e351793bdb1700" iid="f6562113e1bd47deb49191960539f924" creation-date="10/02/2024 19:40:53" order-index="0" type="entity">
-            <layout ax="128" ay="586.25" awidth="115" aheight="63" x="128" y="586.25" width="115" height="63" />
-          </item>
-          <item id="fba742857cdb4c2fbd6d22b61b91ee02" iid="338b1e0996b54348bda8acc59d2008c9" creation-date="10/02/2024 19:40:53" order-index="0" type="entity">
-            <layout ax="1102.5" ay="281.5" awidth="94" aheight="49" x="1102.5" y="281.5" width="94" height="49" />
-          </item>
-          <item id="fc9dde26139b40a799b58e6c2c967b74" iid="9b08602a569a448eae54971c071c00eb" creation-date="10/02/2024 19:40:53" order-index="0" type="entity">
-            <layout ax="1026.5" ay="344" awidth="94" aheight="49" x="1026.5" y="344" width="94" height="49" />
-          </item>
-          <item id="cde5d7bb9b9f4360be80461908c0c197" iid="88141127f1344fcda78687c8331da4c8" creation-date="10/02/2024 19:40:53" order-index="0" type="entity">
-            <layout ax="1026.5" ay="141" awidth="94" aheight="49" x="1026.5" y="141" width="94" height="49" />
-          </item>
-          <item id="5a5008530d874371a4a6aa54c3531555" iid="3d9fd49aa3bc44e0866376db240f4359" creation-date="10/02/2024 19:40:53" order-index="0" type="entity">
-            <layout ax="1102.5" ay="201.25" awidth="94" aheight="49" x="1102.5" y="201.25" width="94" height="49" />
-          </item>
-          <item id="9e51966eb1c84766a207ef692f177bd4" iid="f01810d29a82431e8c9ef89345730991" creation-date="10/02/2024 19:40:53" order-index="0" type="entity">
-            <layout ax="833.5" ay="306" awidth="94" aheight="49" x="833.5" y="306" width="94" height="49" />
-          </item>
-          <item id="55f3afec982e419386bdbd1ffabd0d45" iid="cebf3aa4b2824405ba45924d5ab3b003" creation-date="10/02/2024 19:40:53" order-index="0" type="entity">
-            <layout ax="833.5" ay="182" awidth="94" aheight="49" x="833.5" y="182" width="94" height="49" />
-          </item>
-          <item id="di624739c9919d4ee2841b2dfd57c27be11563" iid="297a33e0ee8b4e1794b78a500ce75cde" creation-date="10/02/2024 19:51:41" order-index="5" type="entity">
-            <layout ax="219" ay="643.375" awidth="40" aheight="23.375" x="50" y="50" width="140" height="160" rotation-center="-4.5784316,-28.024065" />
-            <drawing-line start-point="219,643.375" end-point="258,665.75" />
-          </item>
-          <item id="dia5c1dada299c4eaaa1dc2f7f82c659d13096" iid="e20f51a45ba94ffbb9747987d7895ee7" creation-date="10/02/2024 19:52:12" order-index="6" type="entity">
-            <layout ax="328" ay="632.75" awidth="3" aheight="34.3125" x="50" y="50" width="140" height="160" rotation-center="-328.5,-13.903509" />
-            <drawing-line start-point="328,666.0625" end-point="330,632.75" />
-          </item>
-          <item id="dia64a6f11000543c5ab9d23e13d23f68e1962" iid="4adee6be4fdf4df58d13164ec355086b" creation-date="10/02/2024 19:52:25" order-index="7" type="entity">
-            <layout ax="208" ay="691" awidth="52" aheight="23.75" x="50" y="50" width="140" height="160" rotation-center="-6.3421054,-20.974073" />
-            <drawing-line start-point="208,713.75" end-point="259,691" />
-          </item>
-          <item id="di90723c8b98f64c06b02f695083222a4e6281" iid="4efad4e8e5664982bb997e386e5d532b" creation-date="10/02/2024 19:52:47" order-index="8" type="entity">
-            <layout ax="328.5" ay="693" awidth="1" aheight="45.75" x="50" y="50" width="140" height="160" rotation-center="-329,-14.971204" />
-            <drawing-line start-point="328.5,693" end-point="328.5,737.75" />
-          </item>
-          <item id="di46d85a7bc1ff47bbbc385b20e08bb95c7363" iid="a931fb1e039e46968564e6a496ce1a2c" creation-date="10/02/2024 19:56:41" order-index="9" type="entity">
-            <layout ax="295" ay="205" awidth="35" aheight="27" x="50" y="50" width="140" height="160" />
-            <drawing-line start-point="329,231" end-point="295,205" />
-          </item>
-          <item id="dide6123aedcda4d4f8094afe7457696732136" iid="cc9ff6c7138d43a7bdd4ed86923030b7" creation-date="10/02/2024 19:56:55" order-index="10" type="entity">
-            <layout ax="398" ay="180" awidth="2" aheight="51" x="50" y="50" width="140" height="160" />
-            <drawing-line start-point="398,230" end-point="399,180" />
-          </item>
-          <item id="di1e02f80ee3364beb91a513ba4e3d1e4f2743" iid="367d2bbd8d4f4fc9a7bd8eb11903981c" creation-date="10/02/2024 19:57:02" order-index="11" type="entity">
-            <layout ax="296" ay="258" awidth="34" aheight="26" x="50" y="50" width="140" height="160" />
-            <drawing-line start-point="329,258" end-point="296,283" />
-          </item>
-          <item id="difb53c7e463584bf6916fe2f0f01d897a3718" iid="0c6ae4039a7742ca91139f514138f31d" creation-date="10/02/2024 19:57:11" order-index="12" type="entity">
-            <layout ax="400" ay="258" awidth="2" aheight="41" x="50" y="50" width="140" height="160" />
-            <drawing-line start-point="400,258" end-point="401,298" />
-          </item>
-          <item id="dif5cca016522c4700bb3b64be48268ebc5022" iid="c5d0bd0be5ab4452b9b00cc541f2aee7" creation-date="10/02/2024 20:00:21" order-index="13" type="entity">
-            <layout ax="913" ay="225" awidth="22" aheight="37" x="50" y="50" width="140" height="160" rotation-center="-43.97619,-6.928571" />
-            <drawing-line start-point="934,261" end-point="913,225" />
-          </item>
-          <item id="di4fbcde92df7f4ae382ced44f52ed1b9d6938" iid="ba7061ac505c4642b0271dbef9044f5d" creation-date="10/02/2024 20:00:38" order-index="14" type="entity">
-            <layout ax="912" ay="287" awidth="23" aheight="26" x="50" y="50" width="140" height="160" rotation-center="-155.33333,-14.85" />
-            <drawing-line start-point="912,312" end-point="934,287" />
-          </item>
-          <item id="dib01e5512918f406ebae6b285b487729f2725" iid="7b0d66a4d6d24cbc88fe7a58b9f20e5f" creation-date="10/02/2024 20:00:55" order-index="15" type="entity">
-            <layout ax="1073" ay="191" awidth="1" aheight="71" x="50" y="50" width="140" height="160" rotation-center="-1073.5,-3.2285714" />
-            <drawing-line start-point="1073,191" end-point="1073,261" />
-          </item>
-          <item id="di30bbfe77b57f41ae80cc34478450ba2b9126" iid="dcec54833d274a3da1903161b90785ce" creation-date="10/02/2024 20:01:25" order-index="16" type="entity">
-            <layout ax="1073" ay="235" awidth="34" aheight="28" x="50" y="50" width="140" height="160" rotation-center="-33.015152,-7.2352943" />
-            <drawing-line start-point="1106,235" end-point="1073,262" />
-          </item>
-          <item id="di71a52e6fced049d5bde0d459828f2d9d2797" iid="835fdfa4a45f490abbbc4f8487a06937" creation-date="10/02/2024 20:02:26" order-index="17" type="entity">
-            <layout ax="1074" ay="286" awidth="30" aheight="18" x="50" y="50" width="140" height="160" />
-            <drawing-line start-point="1074,286" end-point="1103,303" />
-          </item>
-          <item id="di00bb5c2d32644e1db1ef3cc296c8c67d4063" iid="387579ab8b4841d082c1c9b5d151a207" creation-date="10/02/2024 20:02:40" order-index="18" type="entity">
-            <layout ax="1073" ay="288" awidth="1" aheight="56" x="50" y="50" width="140" height="160" />
-            <drawing-line start-point="1073,288" end-point="1073,343" />
-          </item>
-          <item id="di030addcc41c4493e84ae697041764fdd3950" iid="70d804c5bf844656ad6af19b38f59a75" creation-date="10/02/2024 20:03:47" order-index="19" type="entity">
-            <layout ax="980" ay="621" awidth="1" aheight="38" x="50" y="50" width="140" height="160" />
-            <drawing-line start-point="980,621" end-point="980,658" />
-          </item>
-          <item id="di117d93552fb94415bf32c5d930e2f6ed8414" iid="57b7b1291aea466f95b3fdbbc8668ff9" creation-date="10/02/2024 20:03:56" order-index="20" type="entity">
-            <layout ax="909.5" ay="686.25" awidth="24" aheight="39.5" x="50" y="50" width="140" height="160" rotation-center="-13.22028,-17.873417" />
-            <drawing-line start-point="909.5,724.75" end-point="932.5,686.25" />
-          </item>
-          <item id="di3e456b58dd8c43cda5ba2b7402f515699856" iid="1278e594fa9a4d14bfdee873b3ff21e5" creation-date="10/02/2024 20:04:22" order-index="21" type="entity">
-            <layout ax="1026.5" ay="686.25" awidth="30" aheight="39.5" x="50" y="50" width="140" height="160" rotation-center="-32.084614,-18.678808" />
-            <drawing-line start-point="1055.5,724.75" end-point="1026.5,686.25" />
-          </item>
-        </layer>
-      </diagram>
-      <diagram type="chen-entity-relationship" id="pe0276fc8d936444690c22d61ae914846_686933812" name="ChenERDiagram1" order-index="2" overview-order-index="0" uid="" name-style="" auto-routed-paths="false" default-line-style="default" view-location="0,65" zoom="0.9">
+      <diagram type="chen-entity-relationship" id="pe0276fc8d936444690c22d61ae914846_686933812" name="ChenERDiagram1" order-index="2" overview-order-index="0" uid="" name-style="" auto-routed-paths="false" default-line-style="default" view-location="0,102" zoom="0.9">
         <style>
           <background-color index="1" color="#FFFFFFFF" />
           <background-color index="2" color="#FFFFFFFF" />
@@ -591,14 +366,11 @@
           </authors>
           <description />
           <creation-date>10/02/2024 20:11:29</creation-date>
-          <change-date>10/13/2024 23:55:15</change-date>
+          <change-date>10/15/2024 21:26:34</change-date>
           <revision-count>0</revision-count>
           <version />
         </meta>
         <abstract-items>
-          <item id="2bd471fb2d514b99ab3f6836828c07f2" cid="ATT012" type="erd-chen-attribute" name="szereplők" creation-date="10/12/2024 03:51:41">
-            <erd-chen-attribute type="multi-value" />
-          </item>
           <item id="57b09bd7ac0c40ffac290ad1a3ba207d" cid="PAR017" type="erd-chen-participation" creator="" creation-date="10/02/2024 20:52:53" from="570ff3ce0e8349f8aa0758cbd38299b2" to="dffe4c541dc9455681bd4bfb414d966e">
             <erd-chen-participation type="mandatory" multiplicity="" />
           </item>
@@ -635,9 +407,6 @@
           <item id="a9926fbb77084843a39be65e2b55ff5e" cid="PAR010" type="erd-chen-participation" creator="" creation-date="10/02/2024 20:51:17" from="c332c86020c242688bb2d918cde17594" to="6de46b5c302c42fe9bdf113e0a88f96c">
             <erd-chen-participation type="mandatory" multiplicity="" />
           </item>
-          <item id="cb68d81ec90344ce839730c0bda604af" cid="PAR076" type="erd-chen-participation" creation-date="10/12/2024 03:53:58" from="2bd471fb2d514b99ab3f6836828c07f2" to="66dc80af714349e3a143c056e1e4dbe8">
-            <erd-chen-participation type="mandatory" multiplicity="" />
-          </item>
           <item id="2fda46dc05f84ac6854008b047828eec" cid="ELEM037" type="universal-connector" creation-date="10/12/2024 01:32:52" to="570ff3ce0e8349f8aa0758cbd38299b2">
             <connector end-cap="arrow" />
           </item>
@@ -651,10 +420,10 @@
             <erd-chen-participation type="mandatory" multiplicity="" />
           </item>
           <item id="ef661c2bed4d4405b94e528d71fc280c" cid="ATC010" type="erd-chen-attribute-connector" creation-date="10/08/2024 05:31:50" from="89034fc907ab4e249bc29da4518fe4eb" to="c332c86020c242688bb2d918cde17594" />
+          <item id="a6587e38043c43068a33a39cb82dd74b" cid="ATC002" type="erd-chen-attribute-connector" creator="" creation-date="10/02/2024 20:49:46" from="8755152af5054291970aa2a525bb8220" to="c332c86020c242688bb2d918cde17594" />
           <item id="faec7f2ab2514ce589a13b20398b7dab" cid="ELEM045" type="universal-connector" creation-date="10/13/2024 23:05:23" from="c447ced540034460a32f73576765858a" to="2c105d3f885545d190b9efbf3dcbbbf8">
             <connector end-cap="arrow" />
           </item>
-          <item id="a6587e38043c43068a33a39cb82dd74b" cid="ATC002" type="erd-chen-attribute-connector" creator="" creation-date="10/02/2024 20:49:46" from="8755152af5054291970aa2a525bb8220" to="c332c86020c242688bb2d918cde17594" />
           <item id="d789d3c97e6c4a5aa6ebbdd81205ff51" cid="PAR082" type="erd-chen-participation" creation-date="10/13/2024 22:52:19" to="2c105d3f885545d190b9efbf3dcbbbf8">
             <erd-chen-participation type="mandatory" multiplicity="" />
           </item>
@@ -691,10 +460,10 @@
           <item id="0ba47740f73345b7ad80907e6c37c48a" cid="PAR003" type="erd-chen-participation" creator="" creation-date="10/02/2024 20:50:19" from="2401ac6e11944f1fa130928f05f9c933" to="2cb493e461f14b49a70d50d87e449c9f">
             <erd-chen-participation type="mandatory" multiplicity="" />
           </item>
-          <item id="3caf3c853c4d4212a25f92eee2a1ff0a" cid="PAR012" type="erd-chen-participation" creator="" creation-date="10/02/2024 20:51:27" from="570ff3ce0e8349f8aa0758cbd38299b2" to="ee28888f3da94fb58e0bb58dac5074ef">
+          <item id="3a76daf4522b47abaceccb2f42fa020f" cid="PAR041" type="erd-chen-participation" creator="" creation-date="10/02/2024 20:55:08">
             <erd-chen-participation type="mandatory" multiplicity="" />
           </item>
-          <item id="3a76daf4522b47abaceccb2f42fa020f" cid="PAR041" type="erd-chen-participation" creator="" creation-date="10/02/2024 20:55:08">
+          <item id="3caf3c853c4d4212a25f92eee2a1ff0a" cid="PAR012" type="erd-chen-participation" creator="" creation-date="10/02/2024 20:51:27" from="570ff3ce0e8349f8aa0758cbd38299b2" to="ee28888f3da94fb58e0bb58dac5074ef">
             <erd-chen-participation type="mandatory" multiplicity="" />
           </item>
           <item id="048f1551c8c54cee88c3ca77ac294ee2" cid="ATC026" type="erd-chen-attribute-connector" creation-date="10/12/2024 02:03:45" from="66dc80af714349e3a143c056e1e4dbe8" to="6309434ebb7941349b76f27fe2925055" />
@@ -739,7 +508,7 @@
             <layout ax="1444.5" ay="638.25" awidth="94" aheight="49" x="1444.5" y="638.25" width="94" height="49" />
           </item>
           <item id="4a8900b5fc8e489799e5307e1ff7ef5d" iid="cd86eeb9f3244264833b3b3893979a99" creation-date="10/02/2024 19:40:53" order-index="16" type="entity">
-            <layout ax="718.5" ay="807.5" awidth="94" aheight="49" x="718.5" y="807.5" width="94" height="49" />
+            <layout ax="785" ay="807.5" awidth="94" aheight="49" x="785" y="807.5" width="94" height="49" />
           </item>
           <item id="8755152af5054291970aa2a525bb8220" iid="5e6c3a91b1e54242a80a13c1bb347fcb" creation-date="10/02/2024 20:40:40" order-index="38" type="entity">
             <layout ax="893" ay="563.5" awidth="115" aheight="49" x="893" y="563.5" width="115" height="49" />
@@ -862,9 +631,9 @@
             <relation from="570ff3ce0e8349f8aa0758cbd38299b2" from-iid="66564d9b1fa5461993f4eefe849e6f96" to="dffe4c541dc9455681bd4bfb414d966e" to-iid="ac00aec8df25428ca256a9866b62a540" />
           </item>
           <item id="7f8505951aee40179cad1349216d0e67" iid="bce5d4a86f4a4c0c90eb5a6f9763d081" creation-date="10/02/2024 20:53:45" order-index="56" type="relation">
-            <layout multiplicity-position="10,-10" line-style="oblique" lock-start-point="true" lock-end-point="true" lock-to-fields="false" auto-path="" x1="766" y1="808" x2="949" y2="765" start-border-pos="0.125" end-border-pos="0.6258928626775742" start-local-pos="47" end-local-pos="69.5" name-position="0,20">
+            <layout multiplicity-position="10,-10" line-style="oblique" lock-start-point="true" lock-end-point="true" lock-to-fields="false" auto-path="" x1="832" y1="808" x2="949" y2="765" start-border-pos="0.125" end-border-pos="0.6258928626775742" start-local-pos="47" end-local-pos="69.5" name-position="0,20">
               <points>
-                <point x="766" y="808" />
+                <point x="832" y="808" />
                 <point x="949" y="765" />
               </points>
             </layout>
@@ -919,12 +688,12 @@
             <relation from="89034fc907ab4e249bc29da4518fe4eb" from-iid="3e419336887a4354a7250684d65009a4" to="c332c86020c242688bb2d918cde17594" to-iid="f709c1e8903449739cdf8b6ef255dbdd" />
           </item>
           <item id="9f8d4c7fa444482ba8616ce8ff3711db" iid="cf5ce3f3366d4b03a453f4913699339b" creation-date="10/03/2024 04:34:38" order-index="0" type="entity">
-            <layout ax="843.5" ay="806.5" awidth="94" aheight="51" x="843.5" y="806.5" width="94" height="51" />
+            <layout ax="903.5" ay="806.5" awidth="94" aheight="51" x="903.5" y="806.5" width="94" height="51" />
           </item>
           <item id="8fadfdce78334999a1683592925cf9b2" iid="8d67427b616644d0a14b485ed83f1bcb" creation-date="10/10/2024 09:11:46" order-index="80" type="relation">
-            <layout line-style="oblique" start-auto-side="false" lock-start-point="true" lock-end-point="true" lock-to-fields="false" auto-path="" x1="890" y1="806" x2="949" y2="765" start-border-pos="0.12367021276595745" end-border-pos="0.6258928626775742" start-local-pos="46.5" end-local-pos="69.5" name-position="0,20">
+            <layout line-style="oblique" start-auto-side="false" lock-start-point="true" lock-end-point="true" lock-to-fields="false" auto-path="" x1="950" y1="806" x2="949" y2="765" start-border-pos="0.12367021276595745" end-border-pos="0.6258928626775742" start-local-pos="46.5" end-local-pos="69.5" name-position="0,20">
               <points>
-                <point x="890" y="806" />
+                <point x="950" y="806" />
                 <point x="949" y="765" />
               </points>
             </layout>
@@ -979,28 +748,16 @@
             <relation to="570ff3ce0e8349f8aa0758cbd38299b2" to-iid="66564d9b1fa5461993f4eefe849e6f96" />
           </item>
           <item id="6309434ebb7941349b76f27fe2925055" iid="5cd671c98b6543b987f4eb6321669bb6" creation-date="10/03/2024 04:34:38" order-index="0" type="entity">
-            <layout ax="968.5" ay="806.5" awidth="94" aheight="51" x="968.5" y="806.5" width="94" height="51" />
+            <layout ax="1023" ay="806.5" awidth="94" aheight="51" x="1023" y="806.5" width="94" height="51" />
           </item>
           <item id="048f1551c8c54cee88c3ca77ac294ee2" iid="8cf6b8a9ff2143389472a25a5e084d84" creation-date="10/12/2024 02:03:45" order-index="97" type="relation">
-            <layout line-style="oblique" lock-start-point="true" lock-end-point="true" lock-to-fields="false" auto-path="" x1="950" y1="765" x2="1015" y2="806" start-border-pos="0.625" end-border-pos="0.12367021276595745" start-local-pos="70" end-local-pos="46.5" name-position="0,20">
+            <layout line-style="oblique" lock-start-point="true" lock-end-point="true" lock-to-fields="false" auto-path="" x1="950" y1="765" x2="1070" y2="806" start-border-pos="0.625" end-border-pos="0.12367021276595745" start-local-pos="70" end-local-pos="46.5" name-position="0,20">
               <points>
                 <point x="950" y="765" />
-                <point x="1015" y="806" />
+                <point x="1070" y="806" />
               </points>
             </layout>
             <relation from="66dc80af714349e3a143c056e1e4dbe8" from-iid="92134f47c437452dbeb793c86d33a77c" to="6309434ebb7941349b76f27fe2925055" to-iid="5cd671c98b6543b987f4eb6321669bb6" />
-          </item>
-          <item id="2bd471fb2d514b99ab3f6836828c07f2" iid="8f1dce93798949baaa0a20d3bdc16f93" creation-date="10/12/2024 03:51:41" order-index="99" type="entity">
-            <layout ax="1093.5" ay="810.25" awidth="94" aheight="49" x="1093.5" y="810.25" width="94" height="49" />
-          </item>
-          <item id="cb68d81ec90344ce839730c0bda604af" iid="86cbabdfc6654d0e83909106e159435b" creation-date="10/12/2024 03:53:58" order-index="100" type="relation">
-            <layout multiplicity-position="10,-10" line-style="oblique" lock-start-point="true" lock-end-point="true" lock-to-fields="false" auto-path="" x1="1140" y1="810" x2="950" y2="765" start-border-pos="0.125" end-border-pos="0.625" start-local-pos="46.5" end-local-pos="70" name-position="0,20">
-              <points>
-                <point x="1140" y="810" />
-                <point x="950" y="765" />
-              </points>
-            </layout>
-            <relation from="2bd471fb2d514b99ab3f6836828c07f2" from-iid="8f1dce93798949baaa0a20d3bdc16f93" to="66dc80af714349e3a143c056e1e4dbe8" to-iid="92134f47c437452dbeb793c86d33a77c" />
           </item>
           <item id="2ad92e337f204e11a4f9aa540af63454" iid="ad230f14fb164a03a524cc3195b3185e" creation-date="10/13/2024 03:14:35" order-index="102" type="relation">
             <layout line-style="oblique" lock-start-point="true" lock-end-point="true" lock-to-fields="false" auto-path="" x1="444" y1="752" x2="879" y2="397" start-border-pos="0.8703703731298447" end-border-pos="0.875" start-local-pos="14" end-local-pos="13.5" name-position="0,20">
