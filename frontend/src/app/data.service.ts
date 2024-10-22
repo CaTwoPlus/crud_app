@@ -7,13 +7,24 @@ import { Observable } from 'rxjs';
 })
 export class DataService {
   // Kapcsolat back-enddel 
-  private apiUrl = 'http://localhost:3000/musorujsag';
+  private apiUrl = 'http://localhost:3000';
 
   constructor(private http: HttpClient) {}
 
-  // Teljes adatbázis lekérése 
-  getItems(): Observable<any[]> {
-    return this.http.get<any[]>(this.apiUrl);
+  getChannels(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/csatornak`);
+  }
+
+  getShows(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/musorok`);
+  }
+
+  getCast(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/szereplok`);
+  }
+
+  getBroadcasts(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/kozvetitesek`);
   }
 
   // Új elem hozzáadása

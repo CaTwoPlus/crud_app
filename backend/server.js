@@ -39,9 +39,39 @@ app.post('/items', (req, res) => {
     });
 });
 
-// Összes rekord olvasása (GET all)
-app.get('/items', (req, res) => {
-    const sql = 'SELECT * FROM items';
+// Táblak olvasása
+app.get('/csatornak', (req, res) => {
+    const sql = 'SELECT * FROM csatorna';
+    db.query(sql, (err, results) => {
+        if (err) {
+            return res.status(500).json({ message: err.message });
+        }
+        res.json(results);
+    });
+});
+
+app.get('/musorok', (req, res) => {
+    const sql = 'SELECT * FROM musor';
+    db.query(sql, (err, results) => {
+        if (err) {
+            return res.status(500).json({ message: err.message });
+        }
+        res.json(results);
+    });
+});
+
+app.get('/szereplok', (req, res) => {
+    const sql = 'SELECT * FROM szereplo';
+    db.query(sql, (err, results) => {
+        if (err) {
+            return res.status(500).json({ message: err.message });
+        }
+        res.json(results);
+    });
+});
+
+app.get('/kozvetitesek', (req, res) => {
+    const sql = 'SELECT * FROM kozvetites';
     db.query(sql, (err, results) => {
         if (err) {
             return res.status(500).json({ message: err.message });

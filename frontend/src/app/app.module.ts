@@ -1,20 +1,28 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 import { DataService } from './data.service';
 import { LatogatoComponent } from './latogato/latogato.component';
 import { AdminComponent } from './admin/admin.component';
 import { MusorComponent } from './musor/musor.component';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
 
 @NgModule({
   declarations: [
     LatogatoComponent,
     AdminComponent,
-    MusorComponent
+    MusorComponent,
+    AppComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    CommonModule,
+    HttpClientModule,
+    AppRoutingModule
   ],
-  providers: [],
-  bootstrap: [DataService]
+  providers: [DataService],
+  bootstrap: [AppComponent]
 })
 export class AppModule { }
