@@ -7,6 +7,7 @@ import { LatogatoComponent } from './latogato/latogato.component';
 import { AdminComponent } from './admin/admin.component';
 import { MusorComponent } from './musor/musor.component';
 import { AppRoutingModule } from './app-routing.module';
+import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 
 @NgModule({
@@ -14,13 +15,14 @@ import { AppComponent } from './app.component';
     LatogatoComponent,
     AdminComponent,
     MusorComponent,
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
     CommonModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule
   ],
   providers: [DataService],
   bootstrap: [AppComponent]

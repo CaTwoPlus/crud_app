@@ -1,73 +1,3 @@
-<!-- Hozzáadási / módosítási modal -->
-<div class="modal fade" id="addNewItem" data-bs-backdrop="static" #addEditItemModal>  
-    <div class="modal-dialog modal-dialog-scrollable modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">{{modalTitle}}</h5>
-          <button type="button" class="btn btn-link btn-sm" data-toggle="tooltip" data-placement="top" title="Listáknál több elem kiválasztásához: ctrl + bal egér gomb">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">
-                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
-              </svg>
-          </button>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="modalClose()" id="add-edit-modal-close" >
-          </button>
-        </div>
-        <div class="modal-body">
-            <form id="add-edit-item-form">
-                <div class="mb-3">
-                    <label *ngIf="!isShow && !isBroadcast" for="nevInput" class="form-label">Név</label>
-                    <label *ngIf="isShow || isBroadcast" for="nevInput" class="form-label">Cím</label>
-                    <input type="text" class="form-control" [class.is-invalid]="!nev" id="nevInput" [(ngModel)]="nev" name="nevInput">
-                    <label for="nevInput" *ngIf="!nev">Név megadása kötelező!</label>
-                </div>
-                <div class="input group mb-3"> 
-                    <label for="kategoriakOutput" class="form-label">Kategóriák</label>
-                    <input type="text" class="form-control" id="kategoriakOutput" [value]="kategoriak" name="kategoriakOutput" readonly>
-                    <select class="form-control" name="kategoriakInput" id="kategoriakInput" [(ngModel)]="kategoriakInput" multiple>
-                        <option *ngFor="let type of kategoriaList" [value]="type.nev">{{type.nev}}</option>
-                    </select>
-                    <label for="autoTipusokInput" class="form-label">Típusok</label>
-                    <select class="form-control" name="autoTipusokInput" id="autoTipusokInput" [(ngModel)]="autoTipusokInput" multiple>
-                        <option *ngFor="let type of autoTipusList" [value]="type.nev">{{type.nev}}</option>
-                    </select>
-                </div>
-                <div class="mb-3">
-                    <label for="arInput" class="form-label">Ár</label>
-                    <input type="number" class="form-control" id="arInput" [(ngModel)]="ar" name="arInput">
-                </div>
-                <div class="mb-3">
-                    <label for="megjegyzesInput" class="form-label">Megjegyzés</label>
-                    <input class="form-control" id="megjegyzesInput" [(ngModel)]="megjegyzes" name="megjegyzesInput">
-                </div>
-                <div class="mb-3">
-                    <label for="generacioInput" class="form-label">Generáció</label>
-                    <input class="form-control" id="generacioInput" [(ngModel)]="generacio" name="generacioInput">
-                </div>
-                <div class="input-group mb-3">
-                    <input class="form-control" type="file" id="formFileMultiple" [(ngModel)]="kepekInput" name="kepekInput" multiple #fileInput>
-                    <button class="btn btn-outline-secondary" type="button" id="inputGroupFileAddon03"
-                    (click)="uploadImages()" [disabled]="kepekInput.length === 0">Képek feltöltése</button>
-                </div>
-                <div *ngIf="activateImagePreview" class="image-container">
-                    <ng-container *ngFor="let img of kepek.split(';')">
-                      <div style="padding: 0px 5px 5px 0px;">
-                        <img class="img-thumbnail" [src]="imgUrl + img" style="max-height: 100px;">
-                      </div>
-                    </ng-container>
-                </div>
-                <button (click)="addAlkatresz()" *ngIf="alkatresz.id === 0" class="btn btn-primary" [disabled]="nev.length === 0">
-                    Hozzáadás
-                </button>
-                <button (click)="updateAlkatresz()" *ngIf="alkatresz.id !== 0" class="btn btn-primary">
-                    Módosítás
-                </button>
-            </form>            
-        </div>
-      </div>
-    </div>
-  </div>
-
 <!--Navigáció-->
 <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -92,6 +22,17 @@
             <button class="dropdown-item" (click)="scrollTo('broadcasts')">Közvetítések</button>
           </div>
         </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Új elem hozzáadása
+          </a>
+          <div class="dropdown-menu" aria-idledby="navbarDropdown">
+            <button class="dropdown-item" (click)="modalAdd('csatorna')" data-toggle="modal" data-target="#addEditItemModal">Csatorna</button>
+            <button class="dropdown-item" (click)="modalAdd('musor')" data-toggle="modal" data-target="#addEditItemModal">Műsor</button>
+            <button class="dropdown-item" (click)="modalAdd('szereplo')" data-toggle="modal" data-target="#addEditItemModal">Szereplő</button>
+            <button class="dropdown-item" (click)="modalAdd('kozvetites')" data-toggle="modal" data-target="#addEditItemModal">Közvetítés</button>
+          </div>
+        </li>
       </ul>
       <form class="form-inline my-2 my-lg-0">
         <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-id="Search">
@@ -104,7 +45,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="table-responsive-sm table-bordered table-hover">
+            <div class="table table-bordered table-hover">
                 <table class="table" id="channels">
                     <thead>
                         <tr>
@@ -119,29 +60,29 @@
                     </thead>
                     <tbody>
                         <tr *ngFor="let item of channels$ | async">
-                            <td>{{item.nev}}</td>
-                            <td>{{item.kategoria}}</td>
-                            <td>{{item.leiras}}</td>
-                            <td class="dataOpsBttns">
-                                <div>
-                                  <button class="btn btn-outline-primary mb-1"
-                                  (click)="modalEdit(item)" data-bs-toggle="modal" data-bs-target="#addNewItem">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-                                      <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-                                      <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
-                                    </svg>
-                                  </button>
-                                </div>
-                                <div>
-                                  <button class="btn btn-outline-danger mb-1"
-                                  (click)="modalDelete(item)">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-                                      <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z"/>
-                                      <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z"/>
-                                    </svg>
-                                  </button>
-                                </div>
-                            </td>
+                          <td>{{item.csatorna_nev}}</td>
+                          <td>{{item.kategoria}}</td>
+                          <td>{{item.leiras}}</td>
+                          <td class="dataOpsBttns">
+                            <div>
+                              <button class="btn btn-outline-primary mb-1"
+                              (click)="modalEdit(item)" data-toggle="modal" data-target="#addEditItemModal">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                  <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                  <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                                </svg>
+                              </button>
+                            </div>
+                            <div>
+                              <button class="btn btn-outline-danger mb-1"
+                              (click)="modalDelete(item)" data-toggle="modal" data-target="#deleteItemModal">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                  <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z"/>
+                                  <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z"/>
+                                </svg>
+                              </button>
+                            </div>
+                          </td>
                         </tr>
                     </tbody>
                 </table>
@@ -154,7 +95,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="table-responsive-sm table-bordered table-hover">
+            <div class="table table-bordered table-hover">
                 <table class="table" id="shows">
                     <thead>
                         <tr>
@@ -168,31 +109,31 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let item of shows$ | async">
-                            <td>{{item.cim}}</td>
-                            <td>{{item.ismerteto}}</td>
-                            <td>{{item.epizod}}</td>
-                            <td class="dataOpsBttns">
-                                <div>
-                                  <button class="btn btn-outline-primary mb-1"
-                                  (click)="modalEdit(item)" data-bs-toggle="modal" data-bs-target="#addNewItem">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-                                      <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-                                      <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
-                                    </svg>
-                                  </button>
-                                </div>
-                                <div>
-                                  <button class="btn btn-outline-danger mb-1"
-                                  (click)="modalDelete(item)">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-                                      <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z"/>
-                                      <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z"/>
-                                    </svg>
-                                  </button>
-                                </div>
-                            </td>
-                        </tr>
+                      <tr *ngFor="let item of shows$ | async">
+                        <td>{{item.musor_cim}}</td>
+                        <td>{{item.ismerteto}}</td>
+                        <td>{{item.epizod}}</td>
+                        <td class="dataOpsBttns">
+                            <div>
+                              <button class="btn btn-outline-primary mb-1"
+                              (click)="modalEdit(item)" data-toggle="modal" data-target="#addEditItemModal">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                  <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                  <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                                </svg>
+                              </button>
+                            </div>
+                            <div>
+                              <button class="btn btn-outline-danger mb-1"
+                              (click)="modalDelete(item)" data-toggle="modal" data-target="#deleteItemModal">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                  <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z"/>
+                                  <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z"/>
+                                </svg>
+                              </button>
+                            </div>
+                        </td>
+                      </tr>
                     </tbody>
                 </table>
             </div>
@@ -204,49 +145,49 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="table-responsive-sm table-bordered table-hover">
+            <div class="table table-bordered table-hover">
                 <table class="table" id="cast">
                     <thead>
                         <tr>
-                            <th class="tableName" colspan="6">Szereplők</th>
+                          <th class="tableName" colspan="6">Szereplők</th>
                         </tr>
                         <tr>
-                            <th>Id</th>
-                            <th>Név</th>
-                            <th>Születési dátum</th>
-                            <th>Nemzetiség</th>
-                            <th>Foglalkozás</th>
-                            <th>Műveletek</th>
+                          <th>Id</th>
+                          <th>Név</th>
+                          <th>Születési dátum</th>
+                          <th>Nemzetiség</th>
+                          <th>Foglalkozás</th>
+                          <th>Műveletek</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let item of cast$ | async">
-                            <td>{{item.id}}</td>
-                            <td>{{item.nev}}</td>
-                            <td>{{item.szul_datum | date:'yyyy-MM-dd'}}</td>
-                            <td>{{item.nemzetiseg}}</td>
-                            <td>{{item.foglalkozas}}</td>
-                            <td class="dataOpsBttns">
-                                <div>
-                                  <button class="btn btn-outline-primary mb-1"
-                                  (click)="modalEdit(item)" data-bs-toggle="modal" data-bs-target="#addNewItem">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-                                      <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-                                      <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
-                                    </svg>
-                                  </button>
-                                </div>
-                                <div>
-                                  <button class="btn btn-outline-danger mb-1"
-                                  (click)="modalDelete(item)">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-                                      <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z"/>
-                                      <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z"/>
-                                    </svg>
-                                  </button>
-                                </div>
-                            </td>
-                        </tr>
+                      <tr *ngFor="let item of cast$ | async">
+                        <td>{{item.id}}</td>
+                        <td>{{item.szereplo_nev}}</td>
+                        <td>{{item.szul_datum | date:'yyyy.MM.dd'}}</td>
+                        <td>{{item.nemzetiseg}}</td>
+                        <td>{{item.foglalkozas}}</td>
+                        <td class="dataOpsBttns">
+                          <div>
+                            <button class="btn btn-outline-primary mb-1"
+                            (click)="modalEdit(item)" data-toggle="modal" data-target="#addEditItemModal">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                              </svg>
+                            </button>
+                          </div>
+                          <div>
+                            <button class="btn btn-outline-danger mb-1"
+                            (click)="modalDelete(item)" data-toggle="modal" data-target="#deleteItemModal">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z"/>
+                                <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z"/>
+                              </svg>
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
                     </tbody>
                 </table>
             </div>
@@ -258,50 +199,239 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="table-responsive-sm table-bordered table-hover">
+            <div class="table table-bordered table-hover">
                 <table class="table" id="broadcasts">
                     <thead>
-                        <tr>
-                            <th class="tableName" colspan="5">Közvetítések</th>
-                        </tr>
-                        <tr>
-                            <th>Csatornanév</th>
-                            <th>Műsorcím</th>
-                            <th>Epizód</th>
-                            <th>Időpont</th>
-                            <th>Műveletek</th>
-                        </tr>
+                      <tr>
+                          <th class="tableName" colspan="5">Közvetítések</th>
+                      </tr>
+                      <tr>
+                          <th>Csatornanév</th>
+                          <th>Műsorcím</th>
+                          <th>Epizód</th>
+                          <th>Időpont</th>
+                          <th>Műveletek</th>
+                      </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let item of broadcasts$ | async">
-                            <td>{{item.csatornanev}}</td>
-                            <td>{{item.musorcim}}</td>
-                            <td>{{item.epizod}}</td>
-                            <td>{{item.idopont | date:'yyyy-MM-dd hh:mm:ss'}}</td>
-                            <td class="dataOpsBttns">
-                                <div>
-                                  <button class="btn btn-outline-primary mb-1"
-                                  (click)="modalEdit(item)" data-bs-toggle="modal" data-bs-target="#addNewItem">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-                                      <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-                                      <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
-                                    </svg>
-                                  </button>
-                                </div>
-                                <div>
-                                  <button class="btn btn-outline-danger mb-1"
-                                  (click)="modalDelete(item)">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-                                      <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z"/>
-                                      <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z"/>
-                                    </svg>
-                                  </button>
-                                </div>
-                            </td>
-                        </tr>
+                      <tr *ngFor="let item of broadcasts$ | async">
+                        <td>{{item.csatorna_nev}}</td>
+                        <td>{{item.musor_cim}}</td>
+                        <td>{{item.epizod}}</td>
+                        <td>{{item.idopont | date:'yyyy.MM.dd HH:mm'}}</td>
+                        <td class="dataOpsBttns">
+                          <div>
+                            <button class="btn btn-outline-primary mb-1"
+                            (click)="modalEdit(item)" data-toggle="modal" data-target="#addEditItemModal">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                              </svg>
+                            </button>
+                          </div>
+                          <div>
+                            <button class="btn btn-outline-danger mb-1"
+                            (click)="modalDelete(item)" data-toggle="modal" data-target="#deleteItemModal">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z"/>
+                                <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z"/>
+                              </svg>
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
 </div>
+
+<!-- Hozzáadási / módosítási modal -->
+<div class="modal" id="addEditItemModal" data-bs-backdrop="static" #addEditItemModalRef>  
+  <div class="modal-dialog modal-dialog-scrollable modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">{{modalTitle}}</h5>
+        <button type="button" class="btn-close" id="add-edit-modal-close" (click)="modalClose()" data-dismiss="modal" #addEditModalCloseBtn>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+            <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form *ngIf="isChannel" #form="ngForm" id="add-edit-item-form-channel">
+          <div class="mb-3">
+              <label for="csatornanevInput" class="form-label">Név</label>
+              <input type="text" class="form-control" required [class.is-invalid]="csatornanevInput.invalid && csatornanevInput.touched" id="csatornanevInput" [(ngModel)]="csatorna.csatorna_nev" name="csatornanevInput" #csatornanevInput="ngModel"
+              [disabled]="isEdit">
+              <label for="csatornanevInput" *ngIf="csatornanevInput.invalid && csatornanevInput.touched">Név megadása kötelező!</label>
+          </div>
+          <div class="input group mb-3"> 
+              <label for="kategoriaOutput" class="form-label">Kategória</label>
+              <select class="form-control" name="kategoriakInput" id="kategoriakInput" [(ngModel)]="csatorna.kategoria">
+                  <option *ngFor="let tipus of kategoriak" [value]="tipus">{{tipus}}</option>
+              </select>
+          </div>
+          <div class="mb-3">
+            <label for="leirasInput" class="form-label">Leírás</label>
+            <input type="text" class="form-control" id="leirasInput" [(ngModel)]="csatorna.leiras" name="leirasInput">
+          </div>
+          <div class="input-group mb-3">
+            <input class="form-control" type="file" id="formFileMultipleChannel" [(ngModel)]="channelMediaInput" name="channelMediaInput" multiple #fileInput>
+            <button class="btn btn-outline-secondary" type="button" id="inputGroupFileAddon03"
+            (click)="uploadChannelMedia(csatorna.csatorna_nev, channelMediaInput)" [disabled]="channelMediaInput.length === 0">Képek feltöltése</button>
+          </div>
+          <!--div *ngIf="activateImagePreview" class="image-container">
+              <ng-container *ngFor="let img of kepek.split(';')">
+                <div style="padding: 0px 5px 5px 0px;">
+                  <img class="img-thumbnail" [src]="imgUrl + img" style="max-height: 100px;">
+                </div>
+              </ng-container>
+          </div-->
+          <div class="modal-footer">
+            <button (click)="isEdit ? updateItem() : createItem()" class="btn btn-primary" [disabled]="form.invalid">Ok</button>
+            <button (click)="modalClose()" class="btn btn-primary">Mégsem</button>  
+          </div>
+        </form>
+        <form *ngIf="isShow" #form="ngForm" id="add-edit-item-form-show">
+          <div class="mb-3">
+            <label for="cimInput" class="form-label">Cím</label>
+            <input type="text" class="form-control" required [class.is-invalid]="cimInput.invalid && cimInput.touched" id="cimInput" [(ngModel)]="musor.musor_cim" name="cimInput" #cimInput="ngModel"
+            [disabled]="isEdit">
+            <label for="cimInput" *ngIf="cimInput.invalid && cimInput.touched">Cím megadása kötelező!</label>
+          </div>
+          <div class="mb-3">
+            <label for="epizodInput" class="form-label">Epizód</label>
+            <input type="text" class="form-control" required [class.is-invalid]='epizodInput.invalid && epizodInput.touched' id="epizodInput" [(ngModel)]="musor.epizod" name="epizodInput" #epizodInput="ngModel"
+            [disabled]="isEdit">
+            <label for="epizodInput" *ngIf="epizodInput.invalid && epizodInput.touched">Epizód megadása kötelező!</label>
+          </div>
+          <div class="mb-3">
+            <label for="ismertetoInput" class="form-label">Ismertető</label>
+            <input type="text" class="form-control" id="ismertetoInput" [(ngModel)]="musor.ismerteto" name="ismertetoInput">
+          </div>
+          <div class="input-group mb-3">
+            <input class="form-control" type="file" id="formFileMultipleShow" [(ngModel)]="showMediaInput" name="channelMediaInput" multiple #fileInput>
+            <button class="btn btn-outline-secondary" type="button" id="inputGroupFileAddon03"
+            (click)="uploadChannelMedia(csatorna.csatorna_nev, channelMediaInput)" [disabled]="channelMediaInput.length === 0">Képek feltöltése</button>
+          </div>
+          <!--div *ngIf="activateImagePreview" class="image-container">
+              <ng-container *ngFor="let img of kepek.split(';')">
+                <div style="padding: 0px 5px 5px 0px;">
+                  <img class="img-thumbnail" [src]="imgUrl + img" style="max-height: 100px;">
+                </div>
+              </ng-container>
+          </div-->
+          <div class="modal-footer">
+            <button (click)="isEdit ? updateItem() : createItem()" class="btn btn-primary" [disabled]="form.invalid">Ok</button>
+            <button (click)="modalClose()" class="btn btn-primary">Mégsem</button>  
+          </div>
+        </form>  
+        <form *ngIf="isCast" #form="ngForm" id="add-edit-item-form-cast">
+          <div class="mb-3">
+            <label for="szereploNevInput" class="form-label">Név</label>
+            <input type="text" class="form-control" id="szereploNevInput" [(ngModel)]="szereplok.szereplo_nev" name="szereploNevInput">
+          </div>
+          <label for="szulDatumInput" class="form-label">Születési dátum</label>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">{{szereplok.szul_datum | date:'yyyy.MM.dd'}}</span>
+            </div>
+            <input type="date" class="form-control" id="szulDatumInput" [(ngModel)]="szereplok.szul_datum" name="szulDatumInput">
+          </div>
+          <div class="mb-3">
+            <label for="foglalkozasInput" class="form-label">Foglalkozás</label>
+            <input type="text" class="form-control" id="foglalkozasInput" [(ngModel)]="szereplok.foglalkozas" name="foglalkozasInput">
+          </div>
+          <div class="mb-3">
+            <label for="nemzetisegInput" class="form-label">Nemzetiség</label>
+            <input type="text" class="form-control" id="nemzetisegInput" [(ngModel)]="szereplok.nemzetiseg" name="nemzetisegInput">
+          </div>
+          <div class="modal-footer">
+            <button (click)="isEdit ? updateItem() : createItem()" class="btn btn-primary" [disabled]="form.invalid">Ok</button>
+            <button (click)="modalClose()" class="btn btn-primary">Mégsem</button>  
+          </div>
+        </form>  
+        <form *ngIf="isBroadcast" #form="ngForm" id="add-edit-item-form-broadcast">
+          <div *ngIf="isEdit" class="mb-3">
+            <label for="kozCsatInput" class="form-label">Csatornanév</label>
+            <input type="text" class="form-control" required [class.is-invalid]="kozvCsatInput.invalid && kozvCsatInput.touched" id="kozCsatInput" [(ngModel)]="kozvetitesek.csatorna_nev" name="kozvCsatInput" #kozvCsatInput="ngModel"
+            [disabled]="isEdit">
+            <label for="csatornaNevInput" *ngIf="kozvCsatInput.invalid && kozvCsatInput.touched">Név megadása kötelező!</label>
+          </div>
+          <div class="mb-3">
+            <label for="kozCsatInput" class="form-label">Csatornanév</label>
+            <select type="text" class="form-control" required [class.is-invalid]="kozvCsatInput.invalid && kozvCsatInput.touched" id="kozCsatInput" [(ngModel)]="kozvetitesek.csatorna_nev" (change)="selectChannel(kozvetitesek.csatorna_nev)" name="kozvCsatInput" #kozvCsatInput="ngModel">
+              <option *ngFor="let csatornak of channels$ | async" [value]="csatornak.csatorna_nev">{{csatornak.csatorna_nev}}</option>
+            </select>
+            <label for="csatornaNevInput" *ngIf="kozvCsatInput.invalid && kozvCsatInput.touched">Név megadása kötelező!</label>
+          </div>
+          <div *ngIf="isEdit" class="mb-3">
+            <label for="kozvMusorInput" class="form-label">Műsorcím</label>
+            <input type="text" class="form-control" required [class.is-invalid]="kozvMusorInput.invalid && kozvMusorInput.touched" id="kozvMusorInput" [(ngModel)]="kozvetitesek.musor_cim" name="kozvMusorInput" #kozvMusorInput="ngModel"
+            [disabled]="isEdit">
+            <label for="csatornaNevInput" *ngIf="kozvMusorInput.invalid && kozvMusorInput.touched">Cím megadása kötelező!</label>
+          </div>
+          <div class="mb-3">
+            <label for="kozvMusorInput" class="form-label">Műsorcím</label>
+            <select type="text" class="form-control" required [class.is-invalid]="kozvMusorInput.invalid && kozvMusorInput.touched" id="kozvMusorInput" [(ngModel)]="kozvetitesek.musor_cim" (change)="selectShow(kozvetitesek.musor_cim)" name="kozvMusorInput" #kozvMusorInput="ngModel">
+              <option *ngFor="let musorok of broadcastShows$ | async" [value]="musorok.musor_cim">{{musorok.musor_cim}}</option>
+            </select>
+            <label for="csatornaNevInput" *ngIf="kozvMusorInput.invalid && kozvMusorInput.touched">Cím megadása kötelező!</label>
+          </div>
+          <div *ngIf="isEdit" class="mb-3">
+            <label for="kozvEpizodInput" class="form-label">Epizód</label>
+            <input type="text" class="form-control" required [class.is-invalid]="kozvEpizodInput.invalid && kozvEpizodInput.touched" id="kozvEpizodInput" [(ngModel)]="kozvetitesek.epizod" name="kozvEpizodInput" #kozvEpizodInput="ngModel"
+            [disabled]="isEdit">
+            <label for="csatornaNevInput" *ngIf="kozvEpizodInput.invalid && kozvEpizodInput.touched">Epizód megadása kötelező!</label>
+          </div>
+          <div class="mb-3">
+            <label for="kozvEpizodInput" class="form-label">Epizód</label>
+            <select type="text" class="form-control" required [class.is-invalid]="kozvEpizodInput.invalid && kozvEpizodInput.touched" id="kozvEpizodInput" [(ngModel)]="kozvetitesek.epizod" name="kozvEpizodInput" #kozvEpizodInput="ngModel">
+              <option *ngFor="let musorok of broadcastEpisodes$ | async" [value]="musorok.epizod">{{musorok.epizod}}</option>
+            </select>
+            <label for="csatornaNevInput" *ngIf="kozvEpizodInput.invalid && kozvEpizodInput.touched">Epizód megadása kötelező!</label>
+          </div>
+          <label for="kozvIdopontInput" class="form-label">Időpont</label>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">{{kozvetitesek.idopont| date:'yyyy.MM.dd HH:MM'}}</span>
+            </div>
+            <input type="datetime-local" class="form-control" required [class.is-invalid]="kozvIdopontInput.invalid && kozvIdopontInput.touched" id="kozvIdopontInput" [(ngModel)]="kozvetitesek.idopont" name="kozvIdopontInput" #kozvIdopontInput="ngModel"
+            [disabled]="isEdit">
+          </div>
+          <label for="csatornaNevInput" *ngIf="kozvIdopontInput.invalid && kozvIdopontInput.touched">Időpont megadása kötelező!</label>
+          <div class="modal-footer">
+            <button (click)="isEdit ? updateItem() : createItem()" class="btn btn-primary" [disabled]="form.invalid">Ok</button>
+            <button (click)="modalClose()" class="btn btn-primary">Mégsem</button>           
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Törlési modal -->
+
+<div class="modal" id="deleteItemModal" data-bs-backdrop="static" #deleteItemModalRef>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">{{modalTitle}}</h5>
+        <button type="button" class="btn-close" id="add-edit-modal-close" (click)="modalClose()" data-dismiss="modal" #deleteModalCloseBtn>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+            <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><h6>{{modalText}}</h6></pre> 
+      </div>
+      <div class="modal-footer">
+        <button (click)="deleteItem()" class="btn btn-primary">Ok</button>
+        <button (click)="modalClose()" class="btn btn-primary">Mégsem</button> 
+      </div>
+    </div>
+  </div>
+</div> 

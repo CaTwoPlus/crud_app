@@ -27,18 +27,6 @@ db.connect(err => {
     console.log('Connected to MySQL');
 });
 
-// Úl elemek hozzáadása (POST)
-app.post('/items', (req, res) => {
-    const { name, description } = req.body;
-    const sql = 'INSERT INTO items (name, description) VALUES (?, ?)';
-    db.query(sql, [name, description], (err, results) => {
-        if (err) {
-            return res.status(400).json({ message: err.message });
-        }
-        res.status(201).json({ id: results.insertId, name, description });
-    });
-});
-
 // Táblak olvasása
 app.get('/csatornak', (req, res) => {
     const sql = 'SELECT * FROM csatorna';
@@ -80,28 +68,180 @@ app.get('/kozvetitesek', (req, res) => {
     });
 });
 
-// Módosítás (PUT)
-app.put('/items/:id', (req, res) => {
-    const { id } = req.params;
-    const { name, description } = req.body;
-    const sql = 'UPDATE items SET name = ?, description = ? WHERE id = ?';
-    db.query(sql, [name, description, id], (err) => {
+// Új elemek hozzáadása (POST)
+// Csatorna
+app.post('/csatornak/:nev/:kategoria/:leiras', (req, res) => {
+    const { nev, kategoria, leiras } = req.params;
+    const sql = 'INSERT INTO csatorna SET kategoria = ?, leiras = ?, csatorna_nev = ?';
+    db.query(sql, [kategoria, leiras, nev], (err) => {
         if (err) {
             return res.status(400).json({ message: err.message });
         }
-        res.json({ id, name, description });
+        res.json({ nev, kategoria, leiras });
+    });
+});
+
+// Szereplő
+app.post('/szereplok/:id/:nev/:szul_datum/:nemzetiseg/:foglalkozas', (req, res) => {
+    const { id, nev, szul_datum, nemzetiseg, foglalkozas } = req.params;
+    const sql = 'INSERT INTO szereplo SET szereplo_nev = ?, szul_datum = ?, nemzetiseg = ?, foglalkozas = ?';
+    db.query(sql, [nev, szul_datum, nemzetiseg, foglalkozas, id], (err) => {
+        if (err) {
+            return res.status(400).json({ message: err.message });
+        }
+        res.json({ id, nev, szul_datum, nemzetiseg, foglalkozas });
+    });
+});
+
+// Műsor
+app.post('/musorok/:cim/:ismerteto/:epizod', (req, res) => {
+    const { cim, ismerteto, epizod } = req.params;
+    const sql = 'INSERT INTO musor SET ismerteto = ?, musor_cim = ?, epizod = ?';
+    db.query(sql, [ismerteto, cim, epizod], (err) => {
+        if (err) {
+            return res.status(400).json({ message: err.message });
+        }
+        res.json({ cim, ismerteto, epizod });
+    });
+});
+
+// Közvetítés
+app.post('/kozvetitesek/:nev/:cim/:epizod/:idopont', (req, res) => {
+    const { nev, cim, epizod, idopont } = req.params;
+    const sql = 'INSERT INTO kozvetites SET idopont = ?, csatorna_nev = ?, musor_cim = ?, epizod = ?';
+    db.query(sql, [idopont, nev, cim, epizod], (err) => {
+        if (err) {
+            return res.status(400).json({ message: err.message });
+        }
+        res.json({ nev, cim, epizod, idopont });
+    });
+});
+
+// Lekérdezések bizonyos csatornákon leadott műsorok epizódjainak kiválasztásához
+app.get('/musorok/:csatorna_nev', (req, res) => {
+    const { csatorna_nev } = req.params;
+    const sql = `
+        SELECT DISTINCT m.musor_cim
+        FROM musor m
+        JOIN kozvetites k ON m.musor_cim = k.musor_cim AND m.epizod = k.epizod
+        WHERE k.csatorna_nev = ?
+    `;
+    db.query(sql, [csatorna_nev], (err, results) => {
+      if (err) {
+        return res.status(500).json({ message: err.message });
+      }
+      res.json(results);
+    });
+});
+  
+app.get('/epizodok/:musor_cim', (req, res) => {
+    const { musor_cim } = req.params;
+    const sql = `
+      SELECT DISTINCT m.epizod
+      FROM musor m
+      LEFT JOIN kozvetites k
+      ON m.musor_cim = k.musor_cim AND m.epizod = k.epizod
+      WHERE m.musor_cim = ?
+    `;
+    db.query(sql, [musor_cim], (err, results) => {
+        if (err) {
+        return res.status(500).json({ message: err.message });
+        }
+        res.json(results);
+    });
+});
+
+// Módosítás (PUT)
+// Csatorna
+app.put('/csatornak/:nev/:kategoria/:leiras', (req, res) => {
+    const { nev, kategoria, leiras } = req.params;
+    const sql = 'UPDATE csatorna SET kategoria = ?, leiras = ? WHERE csatorna_nev = ?';
+    db.query(sql, [kategoria, leiras, nev], (err) => {
+        if (err) {
+            return res.status(400).json({ message: err.message });
+        }
+        res.json({ nev, kategoria, leiras });
+    });
+});
+
+// Szereplő
+app.put('/szereplok/:id/:nev/:szul_datum/:nemzetiseg/:foglalkozas', (req, res) => {
+    const { id, nev, szul_datum, nemzetiseg, foglalkozas } = req.params;
+    const sql = 'UPDATE szereplo SET szereplo_nev = ?, szul_datum = ?, nemzetiseg = ?, foglalkozas = ? WHERE id = ?';
+    db.query(sql, [nev, szul_datum, nemzetiseg, foglalkozas, id], (err) => {
+        if (err) {
+            return res.status(400).json({ message: err.message });
+        }
+        res.json({ id, nev, szul_datum, nemzetiseg, foglalkozas });
+    });
+});
+
+// Műsor
+app.put('/musorok/:cim/:ismerteto/:epizod', (req, res) => {
+    const { cim, ismerteto, epizod } = req.params;
+    const sql = 'UPDATE musor SET ismerteto = ? WHERE musor_cim = ? AND epizod = ?';
+    db.query(sql, [ismerteto, cim, epizod], (err) => {
+        if (err) {
+            return res.status(400).json({ message: err.message });
+        }
+        res.json({ cim, ismerteto, epizod });
+    });
+});
+
+// Közvetítés
+app.put('/kozvetitesek/:nev/:cim/:epizod/:idopont', (req, res) => {
+    const { nev, cim, epizod, idopont } = req.params;
+    const sql = 'UPDATE kozvetites SET idopont = ? WHERE csatorna_nev = ? AND musor_cim = ? AND epizod = ?';
+    db.query(sql, [idopont, nev, cim, epizod], (err) => {
+        if (err) {
+            return res.status(400).json({ message: err.message });
+        }
+        res.json({ nev, cim, epizod, idopont });
     });
 });
 
 // Törlés (DELETE)
-app.delete('/items/:id', (req, res) => {
-    const { id } = req.params;
-    const sql = 'DELETE FROM items WHERE id = ?';
-    db.query(sql, [id], (err) => {
+app.delete('/csatornak/:nev', (req, res) => {
+    const { nev } = req.params;
+    const sql = 'DELETE FROM csatorna WHERE csatorna_nev = ?';
+    db.query(sql, [nev], (err, results) => {
         if (err) {
-            return res.status(400).json({ message: err.message });
+            return res.status(500).json({ message: err.message });
         }
-        res.json({ message: 'Item deleted' });
+        res.json(results);
+    });
+});
+
+app.delete('/musorok/:cim/:epizod', (req, res) => {
+    const { cim, epizod } = req.params;
+    const sql = 'DELETE FROM musor WHERE musor_cim = ? AND epizod = ?';
+    db.query(sql, [cim, epizod], (err, results) => {
+        if (err) {
+            return res.status(500).json({ message: err.message });
+        }
+        res.json(results);
+    });
+});
+
+app.delete('/szereplok/:id', (req, res) => {
+    const { id } = req.params;
+    const sql = 'DELETE FROM szereplo WHERE id = ?';
+    db.query(sql, [id], (err, results) => {
+        if (err) {
+            return res.status(500).json({ message: err.message });
+        }
+        res.json(results);
+    });
+});
+
+app.delete('/kozvetitesek/:nev/:cim/:epizod/:idopont', (req, res) => {
+    const { nev, cim, epizod, idopont } = req.params;
+    const sql = 'DELETE FROM kozvetites WHERE csatorna_nev = ? AND musor_cim = ? AND epizod = ? AND idopont = ?';
+    db.query(sql, [nev, cim, epizod, idopont], (err, results) => {
+        if (err) {
+            return res.status(500).json({ message: err.message });
+        }
+        res.json(results);
     });
 });
 

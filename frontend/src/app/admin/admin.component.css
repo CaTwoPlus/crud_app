@@ -22,3 +22,23 @@ th.tableName {
 html {
     scroll-behavior: smooth;
 }
+
+.modal-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+#deleteItemModal .modal-body {
+    display: flex;
+    justify-content: center;
+}
+
+#deleteItemModal .modal-footer {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+}
