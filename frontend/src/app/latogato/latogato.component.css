@@ -1,0 +1,17 @@
+.table th, td {
+    text-align: center;
+    vertical-align: middle;
+}
+
+th.tableName {
+    font-weight: 1000;
+    font-size: 1.3rem;
+}
+
+.table {
+    margin-bottom: 0rem;
+}
+
+.container {
+    margin-top: 20px;
+}

@@ -1,12 +1,11 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { DataService } from '../data.service';
 import { MediaService } from '../media.service';
 import { Channel } from '../models/channel.model';
 import { Broadcast } from '../models/broadcast.model';
 import { Show } from '../models/show.model';
 import { Cast } from '../models/cast.model';
-import { Model } from '../models/model.model';
 
 @Component({
   selector: 'app-admin',
@@ -16,14 +15,18 @@ import { Model } from '../models/model.model';
 export class AdminComponent {
   @ViewChild('addEditModalCloseBtn') addEditModalCloseBtn?: ElementRef
   @ViewChild('deleteModalCloseBtn') deleteModalCloseBtn?: ElementRef
+  @ViewChild('statsModalCloseBtn') statsModalCloseBtn?: ElementRef
 
   channels$!: Observable<Channel[]>;
   shows$!: Observable<Show[]>;
-  broadcastShows$: Observable<Show[]> = of([]);
+  broadcastShows$!: Observable<Show[]>;
   cast$!: Observable<Cast[]>;
   episodes$!: Observable<String[]>;
-  broadcastEpisodes$: Observable<Show[]> = of([]);
+  broadcastEpisodes$!: Observable<Show[]>;
   broadcasts$!: Observable<Broadcast[]>;
+  castByChannelCount$!: Observable<any[]>;
+  showCastCount$!: Observable<any[]>;
+  showByTopBroadcastCount$!: Observable<any[]>;
   csatorna!: Channel;
   musor!: Show;
   szereplok!: Cast;
@@ -39,6 +42,9 @@ export class AdminComponent {
   isCast = false;
   isBroadcast = false;
   isEdit = false;
+  isChannelStars = false;
+  isShowCastCount = false;
+  isShowByTopBroadcastCount = false;
 
   constructor(private dataService: DataService, private mediaService: MediaService) {}
 
@@ -56,64 +62,82 @@ export class AdminComponent {
     }
   }
 
-  uploadShowMedia(show: string, media: string[]) {
-    if (show) {
-      this.mediaService.setShowMedia(show, media);
+  uploadShowMedia(musor_cim: string, media: string[]) {
+    if (musor_cim) {
+      this.mediaService.setShowMedia(musor_cim, media);
     }
   }
 
-  uploadChannelMedia(channel: string, media: string[]) {
-    if (channel) {
-      this.mediaService.setChannelMedia(channel, media);
+  uploadChannelMedia(csatorna_nev: string, media: string[]) {
+    if (csatorna_nev) {
+      this.mediaService.setChannelMedia(csatorna_nev, media);
     }
   }
 
-  selectChannel(channel: string) {
-    if (channel) {
-      this.broadcastShows$ = this.dataService.getShowsByChannel(channel); 
-      this.broadcastEpisodes$ = of([]); // Epizódok visszaállítása
-    } else {
-      this.broadcastShows$ = of([]); // Műsorok és epizódok visszaállítása
-      this.broadcastEpisodes$ = of([]);
-    }
+  selectChannel() {
+    this.broadcastShows$ = this.dataService.getUniqueShows(); 
   }
 
-  selectShow(show: string) {
-    if (show) {
-      this.broadcastEpisodes$ = this.dataService.getEpisodesByShow(show); 
-    } else {
-      this.broadcastEpisodes$ = of([]);
+  selectShow(musor_cim: string, csatorna_nev: string) {
+    if (musor_cim && csatorna_nev) {
+      this.broadcastEpisodes$ = this.dataService.getUniqueEpisodes(musor_cim, csatorna_nev); 
     }
   }
 
   setFormTypeAndFill(item: any) {
     if (item instanceof Channel || item === 'csatorna') {
-      !(item instanceof String) ? this.csatorna = new Channel(item.csatorna_nev, item.kategoria, item.leiras) : 
+      if (typeof item === 'string') {
         this.csatorna = new Channel('', '', '');
-      this.modalTitle = 'Új csatorna hozzáadása'
+        this.modalTitle = 'Új csatorna hozzáadása';
+      } else {
+        this.csatorna = new Channel(item.csatorna_nev, item.kategoria, item.leiras);
+      } 
       this.isChannel = true;
     }
     if (item instanceof Show || item === 'musor') {
-      !(item instanceof String) ? this.musor = new Show(item.musor_cim, item.ismerteto, item.epizod) :
+      if (typeof item === 'string') {
         this.musor = new Show('', '', '');
-      this.modalTitle = 'Új műsor hozzáadása'
+        this.modalTitle = 'Új műsor hozzáadása';
+      } else {
+        this.musor = new Show(item.musor_cim, item.ismerteto, item.epizod, item.szereplok);
+      } 
       this.isShow = true;
     }
     if (item instanceof Cast || item === 'szereplo') {
-      !(item instanceof String) ? this.szereplok = new Cast(item.szereplo_nev, item.szul_datum, item.nemzetiseg, item.foglalkozas, item.id) :
+      if (typeof item === 'string') {
         this.szereplok = new Cast('', '', '', '');
-      this.modalTitle = 'Új szereplő hozzáadása'
+        this.modalTitle = 'Új szereplő hozzáadása'
+      } else {
+        this.szereplok = new Cast(item.szereplo_nev, item.szul_datum, item.nemzetiseg, item.foglalkozas, item.id);
+      } 
       this.isCast = true;
     }
     if (item instanceof Broadcast || item === 'kozvetites') {
-      !(item instanceof String) ? this.kozvetitesek = new Broadcast(item.csatorna_nev, item.musor_cim, item.epizod, item.idopont) :
+      if (typeof item === 'string') {
         this.kozvetitesek = new Broadcast('', '', '', '');
-      this.modalTitle = 'Új közvetítés hozzáadása'
+        this.modalTitle = 'Új közvetítés hozzáadása'
+      } else {
+        this.kozvetitesek = new Broadcast(item.csatorna_nev, item.musor_cim, item.epizod, item.idopont);
+      } 
       this.isBroadcast = true;
     }
     if (this.isEdit) {
       this.item = '';
     }
+  }
+
+  getChannelStars() {
+    if (this.isChannelStars) {
+      this.castByChannelCount$ = this.dataService.getChannelStars();
+    }
+  }
+
+  getShowCastCount() {
+    this.showCastCount$ = this.dataService.getShowCastCount();
+  }
+
+  getShowByTopBroadcastCount() {
+    this.showByTopBroadcastCount$ = this.dataService.getShowByTopBroadcastCount();
   }
 
   modalEdit(item: any) {
@@ -172,27 +196,21 @@ export class AdminComponent {
     if (this.deleteModalCloseBtn?.nativeElement) {
       this.deleteModalCloseBtn.nativeElement.click();
     }
+    if (this.statsModalCloseBtn?.nativeElement) {
+      this.isChannelStars = false;
+      this.isShowByTopBroadcastCount = false;
+      this.isShowCastCount = false;
+      this.statsModalCloseBtn.nativeElement.click();
+    }
   }
 
   updateItem() {
-    if (this.isBroadcast) {
-      const formattedDate = new Date(this.kozvetitesek.idopont).toISOString().split('T')[0]; 
-      this.kozvetitesek.idopont = formattedDate; 
-      this.dataService.updateTable(this.kozvetitesek).subscribe({
-        next: (updatedData) => {
-          this.broadcasts$ = this.dataService.getBroadcasts();
-        },
-        error: (error) => {
-          console.error('Error updating broadcast:', error);
-        }
-      });
-    }
     if (this.isCast) {
       const formattedDate = new Date(this.szereplok.szul_datum).toISOString().split('T')[0]; 
       this.szereplok.szul_datum = formattedDate; 
 
       this.dataService.updateTable(this.szereplok).subscribe({
-        next: (updatedData) => {
+        next: () => {
           this.cast$ = this.dataService.getCast();
         },
         error: (error) => {
@@ -202,7 +220,7 @@ export class AdminComponent {
     }
     if (this.isChannel) {
       this.dataService.updateTable(this.csatorna).subscribe({
-        next: (updatedData) => {
+        next: () => {
           this.channels$ = this.dataService.getChannels(); 
         },
         error: (error) => {
@@ -212,7 +230,7 @@ export class AdminComponent {
     }
     if (this.isShow) {
       this.dataService.updateTable(this.musor).subscribe({
-        next: (updatedData) => {
+        next: () => {
           this.shows$ = this.dataService.getShows();
         },
         error: (error) => {
@@ -226,10 +244,18 @@ export class AdminComponent {
 
   createItem() {
     if (this.isBroadcast) {
-      const formattedDate = new Date(this.kozvetitesek.idopont).toISOString().split('T')[0]; 
+      const formattedDate = new Date(this.kozvetitesek.idopont).toLocaleString('hu-HU', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false
+      }).toString().replace(/\s+/g, '');
       this.kozvetitesek.idopont = formattedDate; 
       this.dataService.createItem(this.kozvetitesek).subscribe({
-        next: (updatedData) => {
+        next: () => {
           this.broadcasts$ = this.dataService.getBroadcasts();
         },
         error: (error) => {
@@ -242,7 +268,7 @@ export class AdminComponent {
       this.szereplok.szul_datum = formattedDate; 
 
       this.dataService.createItem(this.szereplok).subscribe({
-        next: (updatedData) => {
+        next: () => {
           this.cast$ = this.dataService.getCast();
         },
         error: (error) => {
@@ -252,7 +278,7 @@ export class AdminComponent {
     }
     if (this.isChannel) {
       this.dataService.createItem(this.csatorna).subscribe({
-        next: (updatedData) => {
+        next: () => {
           this.channels$ = this.dataService.getChannels(); 
         },
         error: (error) => {
@@ -262,7 +288,7 @@ export class AdminComponent {
     }
     if (this.isShow) {
       this.dataService.createItem(this.musor).subscribe({
-        next: (updatedData) => {
+        next: () => {
           this.shows$ = this.dataService.getShows();
         },
         error: (error) => {
@@ -276,8 +302,18 @@ export class AdminComponent {
 
   deleteItem() {
     if (this.item instanceof Broadcast) {
+      const formattedDate = new Date(this.item.idopont).toLocaleString('hu-HU', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false
+      }).toString().replace(/\s+/g, '');
+      this.item.idopont = formattedDate; 
       this.dataService.deleteItem(this.item).subscribe({
-        next: (updatedData) => {
+        next: () => {
           this.broadcasts$ = this.dataService.getBroadcasts();
         },
         error: (error) => {
@@ -287,7 +323,7 @@ export class AdminComponent {
     }
     if (this.item instanceof Cast) {
       this.dataService.deleteItem(this.item).subscribe({
-        next: (updatedData) => {
+        next: () => {
           this.cast$ = this.dataService.getCast();
         },
         error: (error) => {
@@ -297,7 +333,7 @@ export class AdminComponent {
     }
     if (this.item instanceof Channel) {
       this.dataService.deleteItem(this.item).subscribe({
-        next: (updatedData) => {
+        next: () => {
           this.channels$ = this.dataService.getChannels(); 
         },
         error: (error) => {
@@ -307,7 +343,7 @@ export class AdminComponent {
     }
     if (this.item instanceof Show) {
       this.dataService.deleteItem(this.item).subscribe({
-        next: (updatedData) => {
+        next: () => {
           this.shows$ = this.dataService.getShows();
         },
         error: (error) => {

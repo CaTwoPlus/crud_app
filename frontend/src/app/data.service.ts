@@ -25,7 +25,7 @@ export class DataService {
 
   getShows(): Observable<Show[]> {
     return this.http.get<Show[]>(`${this.apiUrl}/musorok`).pipe(
-      map((data: any[]) => data.map(item => new Show(item.musor_cim, item.ismerteto, item.epizod)))
+      map((data: any[]) => data.map(item => new Show(item.musor_cim, item.ismerteto, item.epizod, item.szereplok)))
     );
   }
 
@@ -41,12 +41,25 @@ export class DataService {
     );
   }
 
-  getShowsByChannel(channel: string): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/musorok/${channel}`);
+  getUniqueShows(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/unique_musorok`);
   }
 
-  getEpisodesByShow(show: string): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/epizodok/${show}`);
+  getUniqueEpisodes(musor_cim: string, csatorna_nev: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/unique_episodes/${csatorna_nev}/${musor_cim}`);
+  }
+
+  // Statisztikák
+  getChannelStars(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/stats/musorok/getChannelStars`);
+  }
+
+  getShowCastCount(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/stats/musorok/getShowCastCount`);
+  } 
+
+  getShowByTopBroadcastCount(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/stats/musorok/getShowByTopBroadcastCount`);
   }
 
   // Új elem hozzáadása
@@ -56,6 +69,8 @@ export class DataService {
     } else if (model instanceof Cast) {
       return this.http.post<any>(`${this.apiUrl}/szereplok/${model.id}/${model.szereplo_nev}/${model.szul_datum}/${model.nemzetiseg}/${model.foglalkozas}`, model);
     } else if (model instanceof Show) {
+      model.musor_cim = encodeURIComponent(model.musor_cim);
+      model.ismerteto = encodeURIComponent(model.ismerteto);
       return this.http.post<any>(`${this.apiUrl}/musorok/${model.musor_cim}/${model.ismerteto}/${model.epizod}`, model);
     } else if ( model instanceof Broadcast) {
       return this.http.post<any>(`${this.apiUrl}/kozvetitesek/${model.csatorna_nev}/${model.musor_cim}/${model.epizod}/${model.idopont}`, model);
@@ -70,7 +85,9 @@ export class DataService {
     } else if (model instanceof Cast) {
       return this.http.put<any>(`${this.apiUrl}/szereplok/${model.id}/${model.szereplo_nev}/${model.szul_datum}/${model.nemzetiseg}/${model.foglalkozas}`, model);
     } else if (model instanceof Show) {
-      return this.http.put<any>(`${this.apiUrl}/musorok/${model.musor_cim}/${model.ismerteto}/${model.epizod}`, model);
+      model.musor_cim = encodeURIComponent(model.musor_cim);
+      model.ismerteto = encodeURIComponent(model.ismerteto);
+      return this.http.put<any>(`${this.apiUrl}/musorok/${model.musor_cim}/${model.ismerteto}/${model.epizod}/${model?.szereplok}`, model);
     } else if ( model instanceof Broadcast) {
       return this.http.put<any>(`${this.apiUrl}/kozvetitesek/${model.csatorna_nev}/${model.musor_cim}/${model.epizod}/${model.idopont}`, model);
     }

@@ -9,6 +9,7 @@ import { MusorComponent } from './musor/musor.component';
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { AppComponent } from './app.component';
     AdminComponent,
     MusorComponent,
     AppComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,

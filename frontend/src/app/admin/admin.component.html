@@ -11,6 +11,9 @@
         <li class="nav-item active">
             <a class="nav-link" href="naplo">Napló<span class="sr-only">(current)</span></a>
         </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="#" data-toggle="modal" data-target="#statsModal">Statisztikák<span class="sr-only">(current)</span></a>
+        </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Táblák
@@ -35,8 +38,8 @@
         </li>
       </ul>
       <form class="form-inline my-2 my-lg-0">
-        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-id="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        <input class="form-control mr-sm-2" type="search" aria-id="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Keresés</button>
       </form>
     </div>
 </nav>
@@ -99,12 +102,13 @@
                 <table class="table" id="shows">
                     <thead>
                         <tr>
-                            <th class="tableName" colspan="4">Műsorok</th>
+                            <th class="tableName" colspan="5">Műsorok</th>
                         </tr>
                         <tr>
                             <th>Cím</th>
                             <th>Ismertető</th>
                             <th>Epizód</th>
+                            <th>Szereplők</th>
                             <th>Műveletek</th>
                         </tr>
                     </thead>
@@ -113,6 +117,7 @@
                         <td>{{item.musor_cim}}</td>
                         <td>{{item.ismerteto}}</td>
                         <td>{{item.epizod}}</td>
+                        <td>{{item.szereplok}}</td>
                         <td class="dataOpsBttns">
                             <div>
                               <button class="btn btn-outline-primary mb-1"
@@ -221,15 +226,6 @@
                         <td>{{item.idopont | date:'yyyy.MM.dd HH:mm'}}</td>
                         <td class="dataOpsBttns">
                           <div>
-                            <button class="btn btn-outline-primary mb-1"
-                            (click)="modalEdit(item)" data-toggle="modal" data-target="#addEditItemModal">
-                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-                                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-                                <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
-                              </svg>
-                            </button>
-                          </div>
-                          <div>
                             <button class="btn btn-outline-danger mb-1"
                             (click)="modalDelete(item)" data-toggle="modal" data-target="#deleteItemModal">
                               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
@@ -268,7 +264,7 @@
               <label for="csatornanevInput" *ngIf="csatornanevInput.invalid && csatornanevInput.touched">Név megadása kötelező!</label>
           </div>
           <div class="input group mb-3"> 
-              <label for="kategoriaOutput" class="form-label">Kategória</label>
+              <label for="kategoriakInput" class="form-label">Kategória</label>
               <select class="form-control" name="kategoriakInput" id="kategoriakInput" [(ngModel)]="csatorna.kategoria">
                   <option *ngFor="let tipus of kategoriak" [value]="tipus">{{tipus}}</option>
               </select>
@@ -310,6 +306,12 @@
           <div class="mb-3">
             <label for="ismertetoInput" class="form-label">Ismertető</label>
             <input type="text" class="form-control" id="ismertetoInput" [(ngModel)]="musor.ismerteto" name="ismertetoInput">
+          </div>
+          <div class="input group mb-3"> 
+            <label for="szereplokInput" class="form-label">Szereplők</label>
+            <select class="form-control" multiple name="szereplokInput" id="szereplokInput" [(ngModel)]="musor.szereplok" [disabled]="!(musor.musor_cim && musor.epizod)">
+                <option *ngFor="let szereplo of cast$ | async" [value]="szereplo.id">{{szereplo.szereplo_nev}}</option>
+            </select>
           </div>
           <div class="input-group mb-3">
             <input class="form-control" type="file" id="formFileMultipleShow" [(ngModel)]="showMediaInput" name="channelMediaInput" multiple #fileInput>
@@ -362,7 +364,7 @@
           </div>
           <div class="mb-3">
             <label for="kozCsatInput" class="form-label">Csatornanév</label>
-            <select type="text" class="form-control" required [class.is-invalid]="kozvCsatInput.invalid && kozvCsatInput.touched" id="kozCsatInput" [(ngModel)]="kozvetitesek.csatorna_nev" (change)="selectChannel(kozvetitesek.csatorna_nev)" name="kozvCsatInput" #kozvCsatInput="ngModel">
+            <select type="text" class="form-control" required [class.is-invalid]="kozvCsatInput.invalid && kozvCsatInput.touched" id="kozCsatInput" [(ngModel)]="kozvetitesek.csatorna_nev" (change)="selectChannel()" name="kozvCsatInput" #kozvCsatInput="ngModel">
               <option *ngFor="let csatornak of channels$ | async" [value]="csatornak.csatorna_nev">{{csatornak.csatorna_nev}}</option>
             </select>
             <label for="csatornaNevInput" *ngIf="kozvCsatInput.invalid && kozvCsatInput.touched">Név megadása kötelező!</label>
@@ -375,7 +377,7 @@
           </div>
           <div class="mb-3">
             <label for="kozvMusorInput" class="form-label">Műsorcím</label>
-            <select type="text" class="form-control" required [class.is-invalid]="kozvMusorInput.invalid && kozvMusorInput.touched" id="kozvMusorInput" [(ngModel)]="kozvetitesek.musor_cim" (change)="selectShow(kozvetitesek.musor_cim)" name="kozvMusorInput" #kozvMusorInput="ngModel">
+            <select type="text" class="form-control" required [class.is-invalid]="kozvMusorInput.invalid && kozvMusorInput.touched" id="kozvMusorInput" [(ngModel)]="kozvetitesek.musor_cim" (change)="selectShow(kozvetitesek.musor_cim, kozvetitesek.csatorna_nev)" name="kozvMusorInput" #kozvMusorInput="ngModel">
               <option *ngFor="let musorok of broadcastShows$ | async" [value]="musorok.musor_cim">{{musorok.musor_cim}}</option>
             </select>
             <label for="csatornaNevInput" *ngIf="kozvMusorInput.invalid && kozvMusorInput.touched">Cím megadása kötelező!</label>
@@ -413,7 +415,6 @@
 </div>
 
 <!-- Törlési modal -->
-
 <div class="modal" id="deleteItemModal" data-bs-backdrop="static" #deleteItemModalRef>
   <div class="modal-dialog">
     <div class="modal-content">
@@ -435,3 +436,107 @@
     </div>
   </div>
 </div> 
+
+<!-- Statisztikák modal-->
+<div class="modal fade" id="statsModal" data-bs-backdrop="static" #addEditItemModalRef>  
+  <div class="modal-dialog modal-dialog-scrollable modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">{{modalTitle}}</h5>
+        <button type="button" class="btn-close" id="add-edit-modal-close" (click)="modalClose()" data-dismiss="modal" #statsModalCloseBtn>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+            <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="switchContainer">
+          <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" id="getChannelStarsSwitch" [(ngModel)]="isChannelStars" (change)="getChannelStars()">
+            <label class="form-check-label" for="getChannelStarsSwitch">Adott csatornán legtöbbet szereplők száma</label>
+          </div>
+          <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" id="getShowCastCountSwitch" [(ngModel)]="isShowCastCount" (change)="getShowCastCount()">
+            <label class="form-check-label" for="getShowCastCountSwitch">Műsorok szereplő száma</label>
+          </div>
+          <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" id="getShowByTopBroadcastCountSwitch" [(ngModel)]="isShowByTopBroadcastCount" (change)="getShowByTopBroadcastCount()">
+            <label class="form-check-label" for="getShowByTopBroadcastCountSwitch">Legnépszerűbb epizódok száma</label>
+          </div>
+        </div>
+        <div *ngIf="isChannelStars" class="container">
+          <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="table table-bordered table-hover">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th>Cím</th>
+                        <th>Epizód</th>
+                        <th>Csatornák száma</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of castByChannelCount$ | async">
+                        <td>{{item.csatorna_nev}}</td>
+                        <td>{{item.szereplo_nev}}</td>
+                        <td>{{item.musorok_szama}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="isShowCastCount" class="container">
+          <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="table table-bordered table-hover">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th>Cím</th>
+                        <th>Epizód</th>
+                        <th>Szereplők száma</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of showCastCount$ | async">
+                        <td>{{item.musor_cim}}</td>
+                        <td>{{item.epizod}}</td>
+                        <td>{{item.szereplok_szama}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="isShowByTopBroadcastCount" class="container">
+          <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="table table-bordered table-hover">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th>Cím</th>
+                        <th>Epizód</th>
+                        <th>Közvetítések száma</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of showByTopBroadcastCount$ | async">
+                        <td>{{item.musor_cim}}</td>
+                        <td>{{item.epizod}}</td>
+                        <td>{{item.kozvetitesek_szama}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
