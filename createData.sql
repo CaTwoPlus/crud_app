@@ -1,18 +1,18 @@
-insert into admin (email, nev, jelszo, utolso_belepes_datuma) values
+insert into admin (email, admin_nev, jelszo, utolso_belepes_datuma) values
 ('rick@citadel.com', 'Rick Sanchez', 'wubbalubbadubdub', '2024-10-09 14:30:00'),
 ('morty@citadel.com', 'Morty Smith', 'awjeez123', '2024-10-10 09:15:00'),
 ('summer@citadel.com', 'Summer Smith', 'keeplooking', '2024-10-08 18:45:00'),
 ('beth@citadel.com', 'Beth Smith', 'spacehorse22', '2024-10-07 20:00:00'),
 ('jerry@citadel.com', 'Jerry Smith', 'imloser666', '2024-10-06 10:30:00');
 
-insert into csatorna (nev, kategoria, leiras) values
+insert into csatorna (csatorna_nev, kategoria, leiras) values
 ('Interdimensional Cable', 'Szórakoztató', 'Végtelen dimenziók végtelen TV műsorai'),
 ('Blips and Chitz', 'Játék', 'Intergalaktikus játékterem és szórakoztató központ'),
 ('Gazorpazorp TV', 'Dráma', 'A Gazorpazorp bolygó legjobb drámái'),
 ('Gear World Network', 'Ismeretterjesztő', 'Minden, amit a fogaskerekekről tudni kell'),
 ('Plumbus Channel', 'Háztartási', 'A galaxis leghasznosabb háztartási eszközének dedikált csatorna');
 
-insert into szereplo (nev, szul_datum, nemzetiseg, foglalkozas) values
+insert into szereplo (szereplo_nev, szul_datum, nemzetiseg, foglalkozas) values
 ('Ants in my Eyes Johnson', '1960-05-15', 'Földönkívüli', 'TV személyiség'),
 ('Two Brothers', '1985-08-22', 'Földi', 'Akcióhősök'),
 ('Stealy', '1995-03-10', 'Földönkívüli', 'Tolvaj'),
@@ -36,7 +36,7 @@ insert into szereplo (nev, szul_datum, nemzetiseg, foglalkozas) values
 ('Master Krilb', '1975-01-22', 'Plumbuszországi', 'Plumbus használati oktató'),
 ('Dr. Plumbuska', '1988-03-12', 'Gazorpian', 'Plumbus doktor');
 
-insert into musor (cim, ismerteto, epizod) values
+insert into musor (musor_cim, ismerteto, epizod) values
 ('Ball Fondlers', 'Az első epizódban a fondozók bemutatkoznak, és egy különleges küldetést vállalnak.', 'S01E01'),
 ('Ball Fondlers', 'A fondozók egy veszélyes ellenséggel találkoznak, akinek titkai vannak.', 'S01E02'),
 ('Ball Fondlers', 'A fondozók egy új csapattagot szereznek, aki váratlan fordulatot hoz.', 'S01E03'),
@@ -120,7 +120,7 @@ insert into musor_szereploi (szereplo_id, musorcim, epizod) values
 (4, 'Gear Talk with Rick', 'S01E03'),
 (5, 'Jan Quadrant Vincent 16', 'S01E04');
 
-insert into kozvetites (csatornanev, musorcim, epizod, idopont) values
+insert into kozvetites (csatorna_nev, musor_cim, epizod, idopont) values
 ('Interdimensional Cable', 'Intergalactic Sports Show', '2024-10-12', '2024-10-12 19:00:00'),
 ('Blips and Chitz', 'Intergalactic Sports Show', '2024-10-12', '2024-10-12 19:00:00'),
 ('Gazorpazorp TV', 'Intergalactic Sports Show', '2024-10-12', '2024-10-12 19:00:00'),

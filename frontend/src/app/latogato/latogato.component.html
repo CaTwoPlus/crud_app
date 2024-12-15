@@ -1,1 +1,144 @@
-<p>latogato works!</p>
+<!--Navigáció-->
+<nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Táblák
+          </a>
+          <div class="dropdown-menu" aria-idledby="navbarDropdown">
+            <button class="dropdown-item" (click)="scrollTo('channels')">Csatornák</button>
+            <button class="dropdown-item" (click)="scrollTo('shows')">Műsorok</button>
+            <button class="dropdown-item" (click)="scrollTo('cast')">Szereplők</button>
+            <button class="dropdown-item" (click)="scrollTo('broadcasts')">Közvetítések</button>
+          </div>
+        </li>
+      </ul>
+      <form class="form-inline my-2 my-lg-0">
+        <input class="form-control mr-sm-2" type="search" aria-id="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Keresés</button>
+      </form>
+    </div>
+</nav>
+
+<!--Csatornák tábla-->
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="table table-bordered table-hover">
+                <table class="table" id="channels">
+                    <thead>
+                        <tr>
+                            <th class="tableName" colspan="3">Csatornák</th>
+                        </tr>
+                        <tr>
+                            <th>Név</th>
+                            <th>Kategória</th>
+                            <th>Leírás</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of channels$ | async">
+                          <td>{{item.csatorna_nev}}</td>
+                          <td>{{item.kategoria}}</td>
+                          <td>{{item.leiras}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Műsorok tábla-->
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="table table-bordered table-hover">
+                <table class="table" id="shows">
+                    <thead>
+                        <tr>
+                            <th class="tableName" colspan="3">Műsorok</th>
+                        </tr>
+                        <tr>
+                            <th>Cím</th>
+                            <th>Ismertető</th>
+                            <th>Epizód</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of shows$ | async">
+                        <td>{{item.musor_cim}}</td>
+                        <td>{{item.ismerteto}}</td>
+                        <td>{{item.epizod}}</td>
+                      </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Szereplők tábla-->
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="table table-bordered table-hover">
+                <table class="table" id="cast">
+                    <thead>
+                        <tr>
+                          <th class="tableName" colspan="5">Szereplők</th>
+                        </tr>
+                        <tr>
+                          <th>Id</th>
+                          <th>Név</th>
+                          <th>Születési dátum</th>
+                          <th>Nemzetiség</th>
+                          <th>Foglalkozás</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of cast$ | async">
+                        <td>{{item.id}}</td>
+                        <td>{{item.szereplo_nev}}</td>
+                        <td>{{item.szul_datum | date:'yyyy.MM.dd'}}</td>
+                        <td>{{item.nemzetiseg}}</td>
+                        <td>{{item.foglalkozas}}</td>
+                      </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Közvetítések tábla-->
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="table table-bordered table-hover">
+                <table class="table" id="broadcasts">
+                    <thead>
+                      <tr>
+                          <th class="tableName" colspan="4">Közvetítések</th>
+                      </tr>
+                      <tr>
+                          <th>Csatornanév</th>
+                          <th>Műsorcím</th>
+                          <th>Epizód</th>
+                          <th>Időpont</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of broadcasts$ | async">
+                        <td>{{item.csatorna_nev}}</td>
+                        <td>{{item.musor_cim}}</td>
+                        <td>{{item.epizod}}</td>
+                        <td>{{item.idopont | date:'yyyy.MM.dd HH:mm'}}</td>
+                      </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

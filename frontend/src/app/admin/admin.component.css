@@ -1,0 +1,51 @@
+.table th, td {
+    text-align: center;
+    vertical-align: middle;
+}
+
+th.tableName {
+    font-weight: 1000;
+    font-size: 1.3rem;
+}
+
+.table {
+    margin-bottom: 0rem;
+}
+
+.container {
+    margin-top: 20px;
+}
+
+.dataOpsBttns button{
+    padding-bottom: 3px;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+#deleteItemModal .modal-body {
+    display: flex;
+    justify-content: center;
+}
+
+#deleteItemModal .modal-footer {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+}
+
+.switchContainer {
+    display: flex;
+    justify-content: space-evenly;
+    font-size: small;
+}

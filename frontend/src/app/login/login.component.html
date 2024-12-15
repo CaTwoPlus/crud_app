@@ -1,0 +1,17 @@
+<div class="loginContainer">
+    <form class="row gy-2 gx-3" #form="ngForm" (ngSubmit)="onSubmit()">
+        <div class="col-auto text-center">
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" required [class.is-invalid]="usernameInput.invalid && usernameInput.touched" id="usernameInput" placeholder="Email" 
+                    name="usernameInput" [(ngModel)]="emailaddress" #usernameInput="ngModel">
+                <label for="csatornaNevInput" *ngIf="usernameInput.invalid && usernameInput.touched">Email megadása kötelező!</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="password" class="form-control" required [class.is-invalid]="passwordInput.invalid && passwordInput.touched" id="passwordInput" placeholder="Jelszó" 
+                    name="passwordInput" [(ngModel)]="password" #passwordInput="ngModel">
+                <label for="csatornaNevInput" *ngIf="passwordInput.invalid && passwordInput.touched">Jelszó megadása kötelező!</label>
+            </div>
+            <button type="submit" class="btn btn-primary" [disabled]="form.invalid">Bejelentkezés</button>
+        </div>
+    </form>
+</div>
