@@ -206,8 +206,10 @@ export class AdminComponent {
 
   updateItem() {
     if (this.isCast) {
-      const formattedDate = new Date(this.szereplok.szul_datum).toISOString().split('T')[0]; 
-      this.szereplok.szul_datum = formattedDate; 
+      if (this.szereplok.szul_datum) {
+        const formattedDate = new Date(this.szereplok.szul_datum).toISOString().split('T')[0]; 
+        this.szereplok.szul_datum = formattedDate; 
+      }
 
       this.dataService.updateTable(this.szereplok).subscribe({
         next: () => {
@@ -264,9 +266,10 @@ export class AdminComponent {
       });
     }
     if (this.isCast) {
-      const formattedDate = new Date(this.szereplok.szul_datum).toISOString().split('T')[0]; 
-      this.szereplok.szul_datum = formattedDate; 
-
+      if (this.szereplok.szul_datum) {
+        const formattedDate = new Date(this.szereplok.szul_datum).toISOString().split('T')[0]; 
+        this.szereplok.szul_datum = formattedDate; 
+      }
       this.dataService.createItem(this.szereplok).subscribe({
         next: () => {
           this.cast$ = this.dataService.getCast();
@@ -325,6 +328,7 @@ export class AdminComponent {
       this.dataService.deleteItem(this.item).subscribe({
         next: () => {
           this.cast$ = this.dataService.getCast();
+          this.shows$ = this.dataService.getShows(); //on cascade miatt
         },
         error: (error) => {
           console.error('Error deleting from cast:', error);
@@ -335,6 +339,7 @@ export class AdminComponent {
       this.dataService.deleteItem(this.item).subscribe({
         next: () => {
           this.channels$ = this.dataService.getChannels(); 
+          this.broadcasts$ = this.dataService.getBroadcasts(); //on cascade miatt
         },
         error: (error) => {
           console.error('Error deleting from channel:', error);
@@ -345,6 +350,7 @@ export class AdminComponent {
       this.dataService.deleteItem(this.item).subscribe({
         next: () => {
           this.shows$ = this.dataService.getShows();
+          this.broadcasts$ = this.dataService.getBroadcasts(); //on cascade miatt
         },
         error: (error) => {
           console.error('Error deleting from show:', error);

@@ -5,13 +5,15 @@ export class Show extends Model {
     ismerteto: string;
     epizod: string;
     szereplok?: string[] = [];
+    szereplok_ids?: number[] = [];
 
-    constructor(musor_cim: string, ismerteto: string, epizod: string, szereplok?: string[]) {
+    constructor(musor_cim: string, ismerteto: string, epizod: string, szereplok?: string[], szereplok_ids?: number[]) {
         super();
         this.musor_cim = musor_cim;
         this.ismerteto = ismerteto;
         this.epizod = epizod;
         this.szereplok = szereplok;
+        this.szereplok_ids = szereplok_ids;
     }
 
     override toString(): string {

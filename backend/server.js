@@ -98,7 +98,8 @@ app.get('/musorok', (req, res) => {
             m.musor_cim, 
             m.epizod, 
             m.ismerteto, 
-            s.szereplo_nev
+            s.szereplo_nev, 
+            s.id AS szereplo_id  -- Fetch the id of the actor
         FROM musor m
         LEFT JOIN musor_szereploi ms 
             ON m.musor_cim = ms.musor_cim AND m.epizod = ms.epizod
@@ -109,6 +110,8 @@ app.get('/musorok', (req, res) => {
         if (err) {
             return res.status(500).json({ message: err.message });
         }
+
+        // Group results by 'musor_cim' and 'epizod'
         const musorok = results.reduce((container, row) => {
             const key = `${row.musor_cim}|${row.epizod}`;
             if (!container[key]) {
@@ -120,14 +123,15 @@ app.get('/musorok', (req, res) => {
                 };
             }
             if (row.szereplo_nev) {
-                container[key].szereplok.push(row.szereplo_nev); 
+                container[key].szereplok.push({ id: row.szereplo_id, name: row.szereplo_nev });
             }
             return container;
         }, {});
 
         const response = Object.values(musorok).map(item => ({
             ...item,
-            szereplok: item.szereplok.join(', ')
+            szereplok: item.szereplok.map(s => s.name).join(', '),
+            szereplok_ids: item.szereplok.map(s => s.id) 
         }));
 
         res.json(response);
@@ -254,7 +258,7 @@ app.get('/stats/musorok/getShowByTopBroadcastCount', (req, res) => {
 
 // Új elemek hozzáadása (POST)
 // Csatorna
-app.post('/csatornak/:nev/:kategoria/:leiras', (req, res) => {
+app.post('/csatornak/:nev/:kategoria?/:leiras?', (req, res) => {
     const { nev, kategoria, leiras } = req.params;
     const sql = 'INSERT INTO csatorna SET kategoria = ?, leiras = ?, csatorna_nev = ?';
     db.query(sql, [kategoria, leiras, nev], (err) => {
@@ -266,19 +270,19 @@ app.post('/csatornak/:nev/:kategoria/:leiras', (req, res) => {
 });
 
 // Szereplő
-app.post('/szereplok/:id/:nev/:szul_datum/:nemzetiseg/:foglalkozas', (req, res) => {
-    const { id, nev, szul_datum, nemzetiseg, foglalkozas } = req.params;
+app.post('/szereplok/:nev?/:szul_datum?/:nemzetiseg?/:foglalkozas?', (req, res) => {
+    const { nev, szul_datum, nemzetiseg, foglalkozas } = req.params;
     const sql = 'INSERT INTO szereplo SET szereplo_nev = ?, szul_datum = ?, nemzetiseg = ?, foglalkozas = ?';
-    db.query(sql, [nev, szul_datum, nemzetiseg, foglalkozas, id], (err) => {
+    db.query(sql, [nev, szul_datum, nemzetiseg, foglalkozas], (err) => {
         if (err) {
             return res.status(400).json({ message: err.message });
         }
-        res.json({ id, nev, szul_datum, nemzetiseg, foglalkozas });
+        res.json({ nev, szul_datum, nemzetiseg, foglalkozas });
     });
 });
 
 // Műsor
-app.post('/musorok/:cim/:ismerteto/:epizod', (req, res) => {
+app.post('/musorok/:cim/:ismerteto?/:epizod', (req, res) => {
     const { cim, ismerteto, epizod } = req.params;
     // Így lehetnek bennük szimbólumok is
     const decodedCim = decodeURIComponent(cim);
@@ -307,7 +311,7 @@ app.post('/kozvetitesek/:nev/:cim/:epizod/:idopont', (req, res) => {
 
 // Módosítás (PUT)
 // Csatorna
-app.put('/csatornak/:nev/:kategoria/:leiras', (req, res) => {
+app.put('/csatornak/:nev/:kategoria?/:leiras?', (req, res) => {
     const { nev, kategoria, leiras } = req.params;
     const sql = 'UPDATE csatorna SET kategoria = ?, leiras = ? WHERE csatorna_nev = ?';
     db.query(sql, [kategoria, leiras, nev], (err) => {
@@ -319,7 +323,7 @@ app.put('/csatornak/:nev/:kategoria/:leiras', (req, res) => {
 });
 
 // Szereplő
-app.put('/szereplok/:id/:nev/:szul_datum/:nemzetiseg/:foglalkozas', (req, res) => {
+app.put('/szereplok/:id/:nev?/:szul_datum?/:nemzetiseg?/:foglalkozas?', (req, res) => {
     const { id, nev, szul_datum, nemzetiseg, foglalkozas } = req.params;
     const sql = 'UPDATE szereplo SET szereplo_nev = ?, szul_datum = ?, nemzetiseg = ?, foglalkozas = ? WHERE id = ?';
     db.query(sql, [nev, szul_datum, nemzetiseg, foglalkozas, id], (err) => {
@@ -331,9 +335,12 @@ app.put('/szereplok/:id/:nev/:szul_datum/:nemzetiseg/:foglalkozas', (req, res) =
 });
 
 // Műsor
-app.put('/musorok/:cim/:ismerteto/:epizod/:szereplok', (req, res) => {
-    const { cim, ismerteto, epizod, szereplok } = req.params;
+app.put('/musorok/:cim/:epizod', (req, res) => {
+    const { cim, epizod } = req.params;
+    const { ismerteto, szereplok } = req.query; // Use query params for optional fields
+
     const decodedCim = decodeURIComponent(cim);
+
     const updateMusorSql = 'UPDATE musor SET ismerteto = ? WHERE musor_cim = ? AND epizod = ?';
 
     db.query(updateMusorSql, [ismerteto, decodedCim, epizod], (err) => {
