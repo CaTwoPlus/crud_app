@@ -309,7 +309,7 @@
           </div>
           <div class="input group mb-3"> 
             <label for="szereplokInput" class="form-label">Szereplők</label>
-            <select class="form-control" multiple name="szereplokInput" id="szereplokInput" [(ngModel)]="musor.szereplok" [disabled]="!(musor.musor_cim && musor.epizod)">
+            <select class="form-control" multiple name="szereplokInput" id="szereplokInput" [(ngModel)]="musor.szereplok_ids" [disabled]="!(musor.musor_cim && musor.epizod)">
                 <option *ngFor="let szereplo of cast$ | async" [value]="szereplo.id">{{szereplo.szereplo_nev}}</option>
             </select>
           </div>

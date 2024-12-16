@@ -110,8 +110,6 @@ app.get('/musorok', (req, res) => {
         if (err) {
             return res.status(500).json({ message: err.message });
         }
-
-        // Group results by 'musor_cim' and 'epizod'
         const musorok = results.reduce((container, row) => {
             const key = `${row.musor_cim}|${row.epizod}`;
             if (!container[key]) {
@@ -119,11 +117,13 @@ app.get('/musorok', (req, res) => {
                     musor_cim: row.musor_cim,
                     epizod: row.epizod,
                     ismerteto: row.ismerteto,
-                    szereplok: [] 
+                    szereplok: [],
+                    szereplok_ids: [] 
                 };
             }
             if (row.szereplo_nev) {
                 container[key].szereplok.push({ id: row.szereplo_id, name: row.szereplo_nev });
+                container[key].szereplok_ids.push(row.szereplo_id); 
             }
             return container;
         }, {});
@@ -337,30 +337,32 @@ app.put('/szereplok/:id/:nev?/:szul_datum?/:nemzetiseg?/:foglalkozas?', (req, re
 // Műsor
 app.put('/musorok/:cim/:epizod', (req, res) => {
     const { cim, epizod } = req.params;
-    const { ismerteto, szereplok } = req.query; // Use query params for optional fields
-
+    const { ismerteto, szereplok } = req.query;
     const decodedCim = decodeURIComponent(cim);
-
     const updateMusorSql = 'UPDATE musor SET ismerteto = ? WHERE musor_cim = ? AND epizod = ?';
-
-    db.query(updateMusorSql, [ismerteto, decodedCim, epizod], (err) => {
+    db.query(updateMusorSql, [ismerteto || '', decodedCim, epizod], (err) => { 
         if (err) {
             return res.status(400).json({ message: err.message });
         }
-
-        if (szereplok && szereplok.length > 0) {
+        if (szereplok === '' || !szereplok) {
             const deleteSzereplokSql = 'DELETE FROM musor_szereploi WHERE musor_cim = ? AND epizod = ?';
 
             db.query(deleteSzereplokSql, [decodedCim, epizod], (err) => {
                 if (err) {
                     return res.status(400).json({ message: err.message });
                 }
+                res.json({ decodedCim, ismerteto, epizod, szereplok: [] });
+            });
+        } else if (szereplok) {
+            const deleteSzereplokSql = 'DELETE FROM musor_szereploi WHERE musor_cim = ? AND epizod = ?';
 
+            db.query(deleteSzereplokSql, [decodedCim, epizod], (err) => {
+                if (err) {
+                    return res.status(400).json({ message: err.message });
+                }
                 const szereplokArray = szereplok.split(',');
                 const szereplokData = szereplokArray.map((szereploId) => [szereploId.trim(), decodedCim, epizod]);
-
                 const insertSzereplokSql = 'INSERT INTO musor_szereploi (szereplo_id, musor_cim, epizod) VALUES ?';
-
                 db.query(insertSzereplokSql, [szereplokData], (err) => {
                     if (err) {
                         return res.status(400).json({ message: err.message });
@@ -368,8 +370,6 @@ app.put('/musorok/:cim/:epizod', (req, res) => {
                     res.json({ decodedCim, ismerteto, epizod, szereplok: szereplokArray });
                 });
             });
-        } else {
-            res.json({ decodedCim, ismerteto, epizod });
         }
     });
 });
