@@ -106,7 +106,7 @@ export class DataService {
       model.ismerteto = encodeURIComponent(model.ismerteto);
       const params = [
           model.ismerteto && model.ismerteto !== 'null' ? `ismerteto=${model.ismerteto}` : '',
-          model.szereplok && model.szereplok.length > 0 ? `szereplok=${model.szereplok}` : ''
+          model.szereplok_ids && model.szereplok_ids.length > 0 ? `szereplok=${model.szereplok_ids}` : ''
       ].filter(param => param !== '') .join('&'); 
       const url = params ? `${this.apiUrl}/musorok/${model.musor_cim}/${model.epizod}?${params}` : `${this.apiUrl}/musorok/${model.musor_cim}/${model.epizod}`;
       return this.http.put<any>(url, model);
